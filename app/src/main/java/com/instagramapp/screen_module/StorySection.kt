@@ -2,6 +2,7 @@ package com.instagramapp.screen_module
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
@@ -22,12 +23,11 @@ fun StorySection(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 20.dp) // Adds space below the app bar or top
+            .padding(top = 16.dp, bottom = 16.dp)
     ) {
         LazyRow(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp), // Horizontal padding for stories
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             val stories = listOf(
@@ -35,12 +35,17 @@ fun StorySection(navController: NavHostController) {
                 Pair("magazine", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg"),
                 Pair("creators", "https://i.pinimg.com/736x/a5/f3/10/a5f310a0b4130de23139b0d1d19e410c.jpg"),
                 Pair("natgeo", "https://i.pinimg.com/736x/9b/8a/15/9b8a155076809a83617455e1b0dfc7a3.jpg"),
-                Pair("lasaka", "https://i.pinimg.com/236x/14/7c/8f/147c8fec62a3589d8896b768ee5f4680.jpg")
+                Pair("lasaka", "https://i.pinimg.com/236x/14/7c/8f/147c8fec62a3589d8896b768ee5f4680.jpg"),
             )
 
             items(stories.size) { index ->
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .padding(
+                            start = if (index == 0) 16.dp else 0.dp,
+                            end = if (index == stories.size - 1) 16.dp else 0.dp
+                        )
                 ) {
                     Surface(
                         shape = CircleShape,

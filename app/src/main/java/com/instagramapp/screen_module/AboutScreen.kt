@@ -56,7 +56,7 @@ fun AboutScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.weight(1f))
 
         // Bottom Navigation Bar
-        FooterSectionpreview(navController = navController)
+//        FooterSectionPreview(navController = navController)
     }
 }
 

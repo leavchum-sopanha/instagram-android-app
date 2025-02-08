@@ -1,5 +1,6 @@
 package com.instagramapp.screen_module
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -25,15 +26,16 @@ fun FooterSection(navController: NavHostController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+//            .background(Color.Red)
             .height(56.dp)
-            .padding(horizontal = 16.dp),
+            .padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         IconButton(onClick = { navController.navigate(Screen.HOME) }) {
             Icon(Icons.Default.Home, contentDescription = "Home", tint = Color.Black)
         }
-        IconButton(onClick = { navController.navigate("search_screen") }) {
+        IconButton(onClick = { navController.navigate(Screen.SEARCH) }) {
             Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.Black)
         }
         IconButton(onClick = { navController.navigate("add_screen") }) {
@@ -49,7 +51,7 @@ fun FooterSection(navController: NavHostController) {
 }
 
 @Composable
-fun FooterSectionpreview(navController: NavHostController) {
+fun FooterSectionPreview(navController: NavHostController) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
