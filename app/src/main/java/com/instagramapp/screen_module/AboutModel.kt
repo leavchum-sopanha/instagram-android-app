@@ -11,7 +11,7 @@ data class Profile(
 
 val profiles = listOf(
     Profile(
-        imageResId = R.drawable.photo_panha, // Reference to drawable resource
+        imageResId = R.drawable.sopanha, // Reference to drawable resource
         name = "Leavchum Sopanha",
         id = "0003838",
         major = "Business IT"
@@ -23,8 +23,8 @@ val profiles = listOf(
         major = "Business IT"
     ),
     Profile(
-        imageResId = R.drawable.photo_panha,
-        name = "Jane Smith",
+        imageResId = R.drawable.sopangna,
+        name = "Rath Sopangna",
         id = "0005678",
         major = "Financial Technology"
     )

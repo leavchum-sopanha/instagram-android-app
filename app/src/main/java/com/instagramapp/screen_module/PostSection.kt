@@ -4,9 +4,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Comment
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.ModeComment
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -22,40 +24,36 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun PostSection(post: String) {
+fun PostSection(post: Post) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
     ) {
-        // Profile Section
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Profile Picture
             Image(
-                painter = rememberAsyncImagePainter("https://i.pinimg.com/736x/a5/f3/10/a5f310a0b4130de23139b0d1d19e410c.jpg"),
+                painter = rememberAsyncImagePainter(post.profileImage),
                 contentDescription = "Profile Picture",
                 modifier = Modifier
                     .size(30.dp)
-                    .padding(end = 8.dp)
                     .clip(CircleShape)
             )
-            // Username
+            Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "chendaloeut",
+                text = post.userName,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             )
         }
 
-        // Post Image
         Image(
-            painter = rememberAsyncImagePainter(post),
+            painter = rememberAsyncImagePainter(post.postImage),
             contentDescription = "Post Image",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -63,43 +61,96 @@ fun PostSection(post: String) {
                 .height(350.dp)
         )
 
-        // Post Actions
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.Start
+                .padding(4.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { /* Handle Like Action */ }) {
-                Icon(
-                    imageVector = Icons.Default.Favorite,
-                    contentDescription = "Like",
-                    tint = Color.Red,
-                    modifier = Modifier.size(24.dp)
+            Row(
+                modifier = Modifier.weight(1f),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { /* Handle Like Action */ }) {
+                    Icon(
+                        imageVector = Icons.Outlined.FavoriteBorder,
+                        contentDescription = "Like",
+                        tint = Color.Black,
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+                Text(
+                    post.likes,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                IconButton(onClick = { /* Handle Comment Action */ }) {
+                    Icon(
+                        imageVector = Icons.Outlined.ModeComment,
+                        contentDescription = "Comment",
+                        tint = Color.Black,
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+                Text(
+                    post.comments,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                IconButton(onClick = { /* Handle Share Action */ }) {
+                    Icon(
+                        imageVector = Icons.Default.Send,
+                        contentDescription = "Share",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .size(28.dp)
+                            .padding(bottom = 5.dp)
+                            .graphicsLayer(rotationZ = -25f)
+                    )
+                }
+                Text(
+                    post.shares,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
-            IconButton(onClick = { /* Handle Comment Action */ }) {
+
+            IconButton(onClick = { /* Handle Save Action */ }) {
                 Icon(
-                    imageVector = Icons.Default.Comment,
-                    contentDescription = "Comment",
+                    imageVector = Icons.Default.BookmarkBorder,
+                    contentDescription = "Save",
                     tint = Color.Black,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-            IconButton(onClick = { /* Handle Share Action */ }) {
-                Icon(
-                    imageVector = Icons.Default.Share,
-                    contentDescription = "Share",
-                    tint = Color.Black,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(28.dp)
                 )
             }
         }
-        // Caption
-        Text(
-            text = "It's all about the glow",
-            fontSize = 14.sp,
-            modifier = Modifier.padding(horizontal = 8.dp)
-        )
+
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+
+        ) {
+            Text(
+                text = post.userName,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.width(5.dp))
+
+            Text(
+                text = post.description,
+                fontSize = 14.sp,
+            )
+        }
     }
 }

@@ -22,10 +22,11 @@ import androidx.navigation.compose.rememberNavController
 //import com.instagramapp.PostScreen
 import com.instagramapp.screen_module.AboutScreen
 import com.instagramapp.screen_module.FooterSection
-import com.instagramapp.screen_module.FooterSectionPreview
 import com.instagramapp.screen_module.HomeScreen
+import com.instagramapp.screen_module.InboxScreen
 //import com.instagramapp.screen_module.PostSection
 import com.instagramapp.screen_module.LoginScreen
+import com.instagramapp.screen_module.ProfileScreen
 import com.instagramapp.screen_module.SearchScreen
 import com.instagramapp.screen_module.StorySection
 import com.instagramapp.screen_module.StorySectionpreview
@@ -77,11 +78,9 @@ class MainActivity : ComponentActivity() {
 object Screen {
     const val HOME = "home"
     const val ABOUT = "about"
-    const val STORY = "story"
-//    const val POST = "post"
     const val SEARCH = "search"
-    const val FOOTER = "footer"
-
+    const val PROFILE = "profile"
+    const val INBOX = "inbox"
 }
 @Preview(showSystemUi = true)
 @Composable
@@ -127,9 +126,16 @@ fun StartingPoint() {
             composable(Screen.ABOUT) {
                 AboutScreen(nc)
             }
+            composable(Screen.INBOX) {
+                InboxScreen(nc)
+            }
             composable(Screen.SEARCH) {
                 SearchScreen(nc)
             }
+            composable(Screen.PROFILE) {
+                ProfileScreen(nc)
+            }
+
         }
     }
 }

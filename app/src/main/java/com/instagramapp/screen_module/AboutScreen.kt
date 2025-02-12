@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,28 +19,50 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun AboutScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F5F5)) // Light gray background
+            .background(Color(0xFFF5F5F5))
     ) {
-        // Header Section
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFE91E63)) // Pink background
+                .height(80.dp)
+                .background(Color(0xFFE91E63))
                 .padding(vertical = 3.dp),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = rememberAsyncImagePainter("https://cdn.prod.website-files.com/664884473364719e2c0310a2/664c9443d3277bcccf0df9c6_instagram-text-icon.png"),
-                contentDescription = "Instagram Logo",
-                modifier = Modifier.size(100.dp)
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.FavoriteBorder,
+                    contentDescription = "Like",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(28.dp)
+                        .padding(end = 3.dp) // Spacing between icon and text
+                )
+
+                Text(
+                    "Our Team Members",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+
+                Icon(
+                    imageVector = Icons.Outlined.FavoriteBorder,
+                    contentDescription = "Like",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(28.dp)
+                        .padding(start = 3.dp) // Spacing between text and icon
+                )
+            }
         }
 
         // List Section
@@ -54,9 +78,6 @@ fun AboutScreen(navController: NavHostController) {
         }
 
         Spacer(modifier = Modifier.weight(1f))
-
-        // Bottom Navigation Bar
-//        FooterSectionPreview(navController = navController)
     }
 }
 
