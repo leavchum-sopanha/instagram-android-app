@@ -3,6 +3,7 @@ package com.instagramapp.screen_module
 import android.provider.CalendarContract
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,15 +27,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.instagramapp.R
-
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.net.URLEncoder
 
 @Composable
 fun InboxScreen(navController: NavHostController) {
     Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
         TopMenu(navController)
-        Searchbar()
+        Box(modifier = Modifier.fillMaxWidth()) {
+            SearchBar()
+        }
         StorySection(navController)
-        MessagesSection()
+        MessagesSection(navController)
     }
 }
 
@@ -48,77 +53,64 @@ fun TopMenu(navController: NavHostController) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = {
-                navController.popBackStack() // Now using the correct navController
-            }) {
+            IconButton(onClick = { navController.popBackStack() }) {
                 Icon(imageVector = Icons.Outlined.ArrowBackIos, contentDescription = "Back")
             }
             Text(text = "sopanhahaha", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
-
         Spacer(modifier = Modifier.weight(1f))
-
         IconButton(onClick = { /* Handle edit action */ }) {
             Icon(imageVector = Icons.Outlined.ModeEditOutline, contentDescription = "Edit")
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Searchbar() {
-    TextField(
-        value = "",
-        onValueChange = {},
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        placeholder = { Text(text = "Search") },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = "Search Icon"
+fun MessagesSection(navController: NavHostController) {
+    val inboxes = listOf(
+        Inbox(
+            name = "User 1",
+            messagePreview = "Hello, how are you?",
+            imageRes = R.drawable.sopanha,
+            lastSeenDate = "4d",
+            messages = listOf(
+                ChatMessage("other", "Hello, how are you?", "4d"),
+                ChatMessage("me", "I'm good!", "4d")
             )
-        },
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color(0xFFF3F4F6),
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
+        ),
+        Inbox(
+            name = "User 2",
+            messagePreview = "Where are you?",
+            imageRes = R.drawable.sopanha,
+            lastSeenDate = "2d",
+            messages = listOf(
+                ChatMessage("me", "I'm here!", "2d"),
+                ChatMessage("other", "Great!", "2d")
+            )
         )
     )
-}
 
-@Composable
-fun MessagesSection() {
-    val inboxes = listOf(
-        Inbox(name = "User 1", messagePreview = "Hello, how are you?", imageRes = R.drawable.sopanha, lastSeenDate = "4d"),
-        Inbox(name = "User 2", messagePreview = "Where are you?", imageRes = R.drawable.sopanha, lastSeenDate = "2d"),
-        Inbox(name = "User 3", messagePreview = "Let's meet later", imageRes = R.drawable.sopanha, lastSeenDate = "1d"),
-        Inbox(name = "User 4", messagePreview = "Good morning!", imageRes = R.drawable.sopanha, lastSeenDate = "3d"),
-        Inbox(name = "User 5", messagePreview = "Are you there?", imageRes = R.drawable.sopanha, lastSeenDate = "5d")
-    )
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-
-    ) {
+    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         Text("Messages", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.weight(1f))
         Text("Requests", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFF5661E0))
     }
 
     LazyColumn {
-        items(inboxes) { user ->
+        items(inboxes) { inbox ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .clickable {
+                        // Encode the Inbox object as JSON
+                        val inboxJson = Json.encodeToString(inbox)
+                        navController.navigate("inbox/${URLEncoder.encode(inboxJson, "UTF-8")}")
+                    },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(id = user.imageRes),
+                    painter = painterResource(id = inbox.imageRes),
                     contentDescription = "Profile",
                     modifier = Modifier
                         .size(50.dp)
@@ -127,29 +119,17 @@ fun MessagesSection() {
                     contentScale = ContentScale.Crop
                 )
                 Column(modifier = Modifier.padding(start = 12.dp)) {
-                    Text(text = user.name, fontSize = 16.sp)
-                    Row (
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = user.messagePreview, fontSize = 12.sp, color = Color.Gray)
+                    Text(text = inbox.name, fontSize = 16.sp)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(text = inbox.messagePreview, fontSize = 12.sp, color = Color.Gray)
                         Spacer(modifier = Modifier.width(3.dp))
-                        Icon(
-                            imageVector = Icons.Default.Circle,
-                            contentDescription = "Camera",
-                            tint = Color.LightGray,
-                            modifier = Modifier.size(4.dp)
-                        )
+                        Icon(imageVector = Icons.Default.Circle, contentDescription = "Time", tint = Color.LightGray, modifier = Modifier.size(4.dp))
                         Spacer(modifier = Modifier.width(3.dp))
-                        Text(text = user.lastSeenDate, fontSize = 12.sp, color = Color.Gray)
+                        Text(text = inbox.lastSeenDate, fontSize = 12.sp, color = Color.Gray)
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Icon(
-                    imageVector = Icons.Outlined.CameraAlt,
-                    contentDescription = "Camera",
-                    tint = Color.Gray,
-                    modifier = Modifier.size(25.dp)
-                )
+                Icon(imageVector = Icons.Outlined.CameraAlt, contentDescription = "Camera", tint = Color.Gray, modifier = Modifier.size(25.dp))
             }
         }
     }

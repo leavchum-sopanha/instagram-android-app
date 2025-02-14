@@ -1,18 +1,13 @@
 package com.instagramapp.screen_module
 
-
-
-//import android.net.Uri
-//import android.os.Bundle
-//import androidx.activity.ComponentActivity
-//import androidx.activity.compose.setContent
-//import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 //import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
@@ -27,11 +22,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-
+import com.instagramapp.Screen
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -41,22 +37,14 @@ fun LoginScreen() {
             .fillMaxSize()
             .padding(25.dp)
             .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Image(
             painter = rememberAsyncImagePainter("https://cdn.prod.website-files.com/664884473364719e2c0310a2/664c9443d3277bcccf0df9c6_instagram-text-icon.png"),
             contentDescription = "Instagram Logo",
-            modifier = Modifier.size(147.dp)
+            modifier = Modifier.size(150.dp)
         )
-
-        Text(
-            text = "Instagram",
-            fontSize = 36.sp,
-            fontFamily = FontFamily.Cursive,
-            color = Color.Black
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = username,
@@ -86,10 +74,11 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { /* Handle login */ },
+            onClick = { navController.navigate(Screen.HOME) },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0095F6)),
-            modifier = Modifier.fillMaxWidth(0.85f)
-        ) {
+            modifier = Modifier.fillMaxWidth(0.85f),
+             shape = RoundedCornerShape(8.dp),
+            ) {
             Text(text = "Log In", color = Color.White)
         }
 

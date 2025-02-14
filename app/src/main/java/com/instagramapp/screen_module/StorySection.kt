@@ -73,13 +73,13 @@ fun StorySection(navController: NavHostController) {
     }
 }
 
-@Composable
-fun StorySectionpreview(navController: NavHostController) {
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        StorySection(navController = navController) // Pass the navController here
-    }
-}
+//@Composable
+//fun StorySectionpreview(navController: NavHostController) {
+//    Column(
+//        modifier = Modifier.fillMaxSize()
+//    ) {
+//        StorySection(navController = navController) // Pass the navController here
+//    }
+//}
 
 

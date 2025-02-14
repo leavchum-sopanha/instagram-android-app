@@ -27,7 +27,6 @@ fun TopBar(navController: NavHostController) {
 
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
-
     ) {
         // Instagram logo
         Box(
@@ -38,7 +37,6 @@ fun TopBar(navController: NavHostController) {
                 painter = rememberAsyncImagePainter("https://cdn.prod.website-files.com/664884473364719e2c0310a2/664c9443d3277bcccf0df9c6_instagram-text-icon.png"),
                 contentDescription = "Instagram Logo",
                 modifier = Modifier.size(100.dp)
-
             )
         }
         Row(

@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("plugin.serialization") version "1.9.0" // Add this line
 }
-
 android {
     namespace = "com.instagramapp"
     compileSdk = 35
@@ -40,15 +40,11 @@ android {
 }
 
 dependencies {
-//    implementation ("info.androidhive:fontawesome:0.0.5")
-//    implementation("br.com.devsrsouza.compose.icons.android:font-awesome:1.0.0")
-
+    // Other dependencies
     implementation("androidx.compose.material3:material3:1.2.0")
-
-    implementation ("io.coil-kt:coil-compose:2.0.0")
-    implementation ("androidx.activity:activity-compose:1.7.0")
-    implementation ("androidx.compose.runtime:runtime-livedata:1.5.0")
-
+    implementation("io.coil-kt:coil-compose:2.0.0")
+    implementation("androidx.activity:activity-compose:1.7.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.compose.material:material-icons-extended:1.7.6")
     implementation("androidx.navigation:navigation-compose:2.8.4")
@@ -68,4 +64,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Add this line for kotlinx-serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0") // Add this line
 }
