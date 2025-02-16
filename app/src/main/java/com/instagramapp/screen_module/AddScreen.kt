@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.instagramapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,7 +68,7 @@ fun AddScreen() {
             )
 
             Text(
-                "New post",
+                stringResource(R.string.new_post),
                 color = Color.White,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
@@ -75,14 +77,13 @@ fun AddScreen() {
             )
 
             Text(
-                "Next",
+                stringResource(R.string.next),
                 color = Color.Blue,
                 fontSize = 18.sp,
                 modifier = Modifier
                     .clickable { /* Handle next action */ }
             )
         }
-
 
         // Image Preview
         Box(
@@ -104,7 +105,7 @@ fun AddScreen() {
 
         // Recent Images Section
         Text(
-            text = "Recents",
+            text = stringResource(R.string.recent),
             color = Color.White,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
@@ -134,10 +135,3 @@ fun AddScreen() {
         }
     }
 }
-
-// Preview (Comment out when using in real app)
-// @Preview
-// @Composable
-// fun PreviewAddScreen() {
-//     AddScreen(navController = NavHostController())
-// }

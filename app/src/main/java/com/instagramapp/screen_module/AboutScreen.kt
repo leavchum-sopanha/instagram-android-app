@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,6 +23,7 @@ import androidx.navigation.NavHostController
 import com.example.androidapp_test.ui.theme.DarkBackground
 import com.example.androidapp_test.ui.theme.DarkSurface
 import com.example.androidapp_test.ui.theme.DarkText
+import com.instagramapp.R
 import com.instagramapp.mvvm_module.ThemeViewModel
 
 @Composable
@@ -34,13 +36,13 @@ fun AboutScreen(navController: NavHostController, themeVM: ThemeViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(backgroundColor) // Use theme-aware background color
+            .background(backgroundColor)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(80.dp)
-                .background(Color(0xFFE91E63)) // Keep header color consistent
+                .background(Color(0xFFE91E63))
                 .padding(vertical = 3.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -57,7 +59,7 @@ fun AboutScreen(navController: NavHostController, themeVM: ThemeViewModel) {
                 )
 
                 Text(
-                    "Our Team Members",
+                    stringResource(R.string.our_team_members),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White // Keep text color consistent

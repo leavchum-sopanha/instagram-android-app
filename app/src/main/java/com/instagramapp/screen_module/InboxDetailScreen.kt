@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -31,6 +32,7 @@ import coil.compose.AsyncImage
 import com.example.androidapp_test.ui.theme.DarkBackground
 import com.example.androidapp_test.ui.theme.LightBackground
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.instagramapp.R
 import com.instagramapp.mvvm_module.ThemeViewModel
 import kotlinx.serialization.json.Json
 
@@ -90,7 +92,7 @@ fun InboxDetailScreen(navController: NavController, inboxJson: String, themeVM: 
                                 color = textColor
                             )
                             Text(
-                                text = "${inbox.followers} followers",
+                                text = "${inbox.followers} ${stringResource(R.string.followers)}",
                                 fontSize = 12.sp,
                                 color = secondaryTextColor
                             )
@@ -164,7 +166,7 @@ fun InboxDetailScreen(navController: NavController, inboxJson: String, themeVM: 
                             ) {
                                 if (messageText.value.isEmpty()) {
                                     Text(
-                                        text = "Message...",
+                                        text = "${stringResource(R.string.messages)}...",
                                         color = textColor, // Use theme-aware placeholder color
                                         fontSize = 16.sp
                                     )

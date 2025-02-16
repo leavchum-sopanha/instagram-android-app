@@ -15,6 +15,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 //import androidx.compose.ui.platform.LocalContext
 //import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -34,14 +36,16 @@ import com.instagramapp.mvvm_module.ThemeViewModel
 
 @Composable
 fun LoginScreen(navController: NavHostController, themeVM: ThemeViewModel) {
+    val context = LocalContext.current
+
     val backgroundColor = if (themeVM.dark.value) DarkBackground else LightBackground
     val textColor = if (themeVM.dark.value) DarkText else LightText
-    val buttonColor = if (themeVM.dark.value) Color(0xFF0095F6) else Color(0xFF0095F6) // Keep button color consistent
+    val buttonColor = Color(0xFF0095F6)
     val iconColor = if (themeVM.dark.value) Color.White else Color.Black
     val logoUrl = if (themeVM.dark.value) {
-        R.drawable.instagram_white_text // Dark mode logo
+        R.drawable.instagram_white_text
     } else {
-        "https://cdn.prod.website-files.com/664884473364719e2c0310a2/664c9443d3277bcccf0df9c6_instagram-text-icon.png" // Light mode logo
+        "https://cdn.prod.website-files.com/664884473364719e2c0310a2/664c9443d3277bcccf0df9c6_instagram-text-icon.png"
     }
 
     var username by remember { mutableStateOf("") }
@@ -52,7 +56,7 @@ fun LoginScreen(navController: NavHostController, themeVM: ThemeViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .padding(25.dp)
-            .background(backgroundColor), // Use theme-aware background color
+            .background(backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -65,7 +69,7 @@ fun LoginScreen(navController: NavHostController, themeVM: ThemeViewModel) {
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
-            label = { Text("Phone number, email or username", color = textColor) }, // Use theme-aware text color
+            label = { Text(stringResource(id = R.string.phone_email_username), color = textColor) },
             modifier = Modifier.fillMaxWidth(0.85f),
             colors = TextFieldDefaults.colors(
                 focusedTextColor = textColor,
@@ -82,14 +86,14 @@ fun LoginScreen(navController: NavHostController, themeVM: ThemeViewModel) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password", color = textColor) }, // Use theme-aware text color
+            label = { Text(stringResource(id = R.string.password), color = textColor) },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
                         if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                         contentDescription = null,
-                        tint = iconColor // Use theme-aware icon color
+                        tint = iconColor
                     )
                 }
             },
@@ -112,13 +116,13 @@ fun LoginScreen(navController: NavHostController, themeVM: ThemeViewModel) {
             modifier = Modifier.fillMaxWidth(0.85f),
             shape = RoundedCornerShape(8.dp),
         ) {
-            Text(text = "Log In", color = Color.White)
+            Text(text = stringResource(id = R.string.log_in), color = Color.White)
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = "Forgot your login details? Get help logging in.",
+            text = stringResource(id = R.string.forgot_login),
             fontSize = 14.sp,
             color = Color(0xFF0095F6),
             modifier = Modifier.clickable { /* Handle help */ }
@@ -127,7 +131,7 @@ fun LoginScreen(navController: NavHostController, themeVM: ThemeViewModel) {
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = "OR",
+            text = stringResource(id = R.string.or),
             fontSize = 14.sp,
             color = Color.Gray
         )
@@ -135,7 +139,7 @@ fun LoginScreen(navController: NavHostController, themeVM: ThemeViewModel) {
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = "Log in with Facebook",
+            text = stringResource(id = R.string.login_facebook),
             fontSize = 14.sp,
             color = Color(0xFF0095F6),
             modifier = Modifier.clickable { /* Handle Facebook login */ }
@@ -144,7 +148,7 @@ fun LoginScreen(navController: NavHostController, themeVM: ThemeViewModel) {
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Don't have an account? Sign up.",
+            text = stringResource(id = R.string.dont_have_account),
             fontSize = 14.sp,
             color = Color.Gray,
             modifier = Modifier.clickable { /* Handle sign-up */ }

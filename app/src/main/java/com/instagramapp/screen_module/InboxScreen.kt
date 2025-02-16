@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -131,14 +132,14 @@ fun MessagesSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Messages",
+            text = stringResource(R.string.messages),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             color = textColor // Use theme-aware text color
         )
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = "Requests",
+            text = stringResource(R.string.requests),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF5661E0) // Keep this color consistent or make it theme-aware

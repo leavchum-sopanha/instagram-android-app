@@ -1,6 +1,7 @@
 package com.instagramapp.screen_module
 
 import android.content.Context
+import android.content.res.Configuration
 import android.provider.CalendarContract
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,6 +27,7 @@ import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.ModeEditOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -39,7 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.instagramapp.Screen
-import androidx.compose.runtime.MutableState
+import androidx.compose.ui.platform.LocalConfiguration
 import com.instagramapp.mvvm_module.LanguageViewModel
 import com.instagramapp.mvvm_module.ThemeViewModel
 import androidx.compose.ui.res.stringResource
@@ -51,6 +53,8 @@ import com.example.androidapp_test.ui.theme.DarkText
 import com.example.androidapp_test.ui.theme.LightBackground
 import com.example.androidapp_test.ui.theme.LightSurface
 import com.example.androidapp_test.ui.theme.LightText
+import java.util.Locale
+import androidx.compose.runtime.collectAsState
 
 @Composable
 fun ProfileScreen(
@@ -58,8 +62,18 @@ fun ProfileScreen(
     themeVM: ThemeViewModel,
     languageVM: LanguageViewModel
 ) {
+    val context = LocalContext.current
+    val configuration = LocalConfiguration.current
     val backgroundColor = if (themeVM.dark.value) DarkBackground else LightBackground
     val textColor = if (themeVM.dark.value) DarkText else LightText
+
+    // Observe language changes and update the configuration
+    LaunchedEffect(languageVM.currentLanguage.value) {
+        val locale = Locale(languageVM.currentLanguage.value)
+        val config = Configuration(configuration)
+        config.setLocale(locale)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+    }
 
     Box(
         modifier = Modifier
@@ -70,7 +84,7 @@ fun ProfileScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            item { TopMenuProfile(navController, themeVM, languageVM, textColor, backgroundColor) }
+            item { TopMenuProfile(navController, themeVM, languageVM, textColor, backgroundColor, context) }
             item { Spacer(modifier = Modifier.height(16.dp)) }
             item { ProfileHeader(languageVM, textColor) }
             item { Spacer(modifier = Modifier.height(16.dp)) }
@@ -91,10 +105,10 @@ fun TopMenuProfile(
     themeVM: ThemeViewModel,
     languageVM: LanguageViewModel,
     textColor: Color,
-    backgroundColor: Color
+    backgroundColor: Color,
+    context: Context
 ) {
     val isMenuExpanded = remember { mutableStateOf(false) }
-    val context = LocalContext.current
 
     Row(
         modifier = Modifier
@@ -141,14 +155,14 @@ fun TopMenuProfile(
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(
-                                text = if (themeVM.dark.value) "Light Mode" else "Dark Mode",
+                                text = if (themeVM.dark.value) "${stringResource(R.string.light_mode)}" else "${stringResource(R.string.dark_mode)}",
                                 fontSize = 16.sp,
                                 modifier = Modifier.weight(1f),
                                 color = textColor)
                             Spacer(modifier = Modifier.width(8.dp))
                             Icon(
-                                imageVector = if (themeVM.dark.value) Icons.Default.LightMode else Icons.Default.DarkMode, // Use themeVM.dark.value
-                                contentDescription = if (themeVM.dark.value) "Light Mode" else "Dark Mode", // Use themeVM.dark.value
+                                imageVector = if (themeVM.dark.value) Icons.Default.LightMode else Icons.Default.DarkMode,
+                                contentDescription = if (themeVM.dark.value) "Light Mode" else "Dark Mode",
                                 tint = textColor
                             )
                         }
@@ -158,12 +172,12 @@ fun TopMenuProfile(
                 // Language Toggle
                 DropdownMenuItem(
                     onClick = {
-                        languageVM.switchLanguage(context)
+                        languageVM.switchLanguage(context) // Pass the context here
                         isMenuExpanded.value = false
                     },
                     text = {
                         Text(
-                            text = "Switch Language (${languageVM.currentLanguage.value})",
+                            text = "${stringResource(R.string.switch_language)} (${languageVM.currentLanguage.value})",
                             fontSize = 16.sp,
                             color = textColor)
                     }
@@ -177,12 +191,11 @@ fun TopMenuProfile(
                     },
                     text = {
                         Text(
-                            text = "Log out",
+                            text = stringResource(R.string.log_out),
                             fontSize = 16.sp,
                             color = textColor)
                     }
                 )
-
             }
         }
     }
@@ -190,6 +203,8 @@ fun TopMenuProfile(
 
 @Composable
 fun ProfileHeader(languageVM: LanguageViewModel, textColor: Color) {
+    val currentLanguage = languageVM.currentLanguage.value
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -206,7 +221,7 @@ fun ProfileHeader(languageVM: LanguageViewModel, textColor: Color) {
             color = Color.LightGray
         ) {
             Image(
-                painter = rememberAsyncImagePainter("https://scontent.fpnh9-1.fna.fbcdn.net/v/t39.30808-6/464285754_1743384799730720_4287534339148776544_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEbQMtdsdO19Al06QWU2m5xbjcVGJzFSiBuNxUYnMVKIEQwzIdD-DyBJyK0kLaV64L5l1yaW9A8lWbRtDT9-b1Q&_nc_ohc=LO0bDTL-h2oQ7kNvgGOSNew&_nc_oc=Adj744oFKqfrTBZwxTNlwNW4O9831hHzKpo8NICVykFmT6Axk1FDLRRNROTeJ54fAA8&_nc_zt=23&_nc_ht=scontent.fpnh9-1.fna&_nc_gid=AcPGfyflm564fdcZyXtdNB5&oh=00_AYD5E5nq533JrJtrVWefCHSGHtscGndhXSgFBUeF8SfSwQ&oe=67B28444"),
+                painter = rememberAsyncImagePainter("https://example.com/profile.jpg"),
                 contentDescription = "Profile Picture",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.size(70.dp)
@@ -235,34 +250,6 @@ fun ProfileHeader(languageVM: LanguageViewModel, textColor: Color) {
         Column {
             Text(text = "Sopanha LEAVCHUM", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = textColor)
             Text(text = "Nothing here!", fontSize = 14.sp, color = textColor)
-        }
-    }
-}
-
-@Composable
-fun ActionButtons(languageVM: LanguageViewModel, textColor: Color) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-    ) {
-        OutlinedButton(
-            onClick = { /* Edit Profile Action */ },
-            modifier = Modifier.weight(1f),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = textColor),
-            shape = RoundedCornerShape(8.dp)
-        ) {
-            Text(text = stringResource(R.string.edit_profile), fontSize = 16.sp, fontWeight = FontWeight.Bold)
-        }
-        Spacer(modifier = Modifier.width(8.dp))
-        OutlinedButton(
-            onClick = { /* Share Profile Action */ },
-            modifier = Modifier.weight(1f),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = textColor),
-            shape = RoundedCornerShape(8.dp)
-        ) {
-            Text(text = stringResource(R.string.share_profile), fontSize = 16.sp, fontWeight = FontWeight.Bold)
         }
     }
 }

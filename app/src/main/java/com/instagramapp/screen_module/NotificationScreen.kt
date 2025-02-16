@@ -13,11 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.instagramapp.R
 import com.instagramapp.mvvm_module.ThemeViewModel
 
 @Composable
@@ -41,7 +43,7 @@ fun NotificationScreen(navController: NavController, themeVM: ThemeViewModel) {
         }
 
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-            SectionHeader("Yesterday", textColor)
+            SectionHeader(stringResource(R.string.yesterday), textColor)
             NotificationItem(
                 username = "phchorng and iam_unaaaa",
                 action = "shared notes",
@@ -60,7 +62,7 @@ fun NotificationScreen(navController: NavController, themeVM: ThemeViewModel) {
                 isFollowButton = false,
                 buttonColor = buttonColor
             )
-            SectionHeader("Last 7 days", textColor)
+            SectionHeader(stringResource(R.string.last_7_days), textColor)
             NotificationItem(
                 username = "rathapich_",
                 action = "posted a thread you might like:",
@@ -136,7 +138,7 @@ fun NotificationItem(
                 onClick = { /* Follow User */ },
                 colors = ButtonDefaults.buttonColors(containerColor = buttonColor) // Use theme-aware button color
             ) {
-                Text(text = "Follow", color = Color.White)
+                Text(text = stringResource(R.string.follow), color = Color.White)
             }
         }
     }
@@ -157,7 +159,7 @@ fun NotificationHeader(navController: NavController, iconColor: Color, textColor
             )
         }
         Text(
-            text = "Notification",
+            text = stringResource(R.string.notification),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = textColor // Use theme-aware text color

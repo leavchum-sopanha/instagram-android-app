@@ -17,12 +17,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
+import com.instagramapp.R
 import com.instagramapp.mvvm_module.ThemeViewModel
 
 @Composable
@@ -63,14 +65,14 @@ fun SearchScreen(navController: NavHostController, themeVM: ThemeViewModel) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Recent",
+                text = stringResource(R.string.recent),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = textColor // Use theme-aware text color
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = "See all",
+                text = stringResource(R.string.see_all),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF5661E0) // Keep this color consistent or make it theme-aware

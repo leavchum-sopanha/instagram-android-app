@@ -15,66 +15,33 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.instagramapp.screen_module.*
-import com.instagramapp.ui.theme.InstagramAppTheme
 import kotlinx.serialization.json.Json
 import com.instagramapp.mvvm_module.ThemeViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.instagramapp.mvvm_module.LanguageViewModel
-import android.content.Context
-import android.content.Intent
-import android.content.res.Configuration
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.SideEffect
-import androidx.core.view.WindowCompat
-import com.example.androidapp_test.ui.theme.DarkBackground
-import com.example.androidapp_test.ui.theme.LightBackground
-import java.util.Locale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
+import com.example.androidapp_test.ui.theme.DarkBackground
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-
-//class MainActivity : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        enableEdgeToEdge() // Enable edge-to-edge display
-//        setContent {
-//            val themeVM: ThemeViewModel = viewModel()
-//            val systemUiController = rememberSystemUiController()
-//            val darkTheme = isSystemInDarkTheme()
-//
-//            SideEffect {
-//                systemUiController.setStatusBarColor(
-//                    color = if (darkTheme) Color(0xFF121212) else Color.White,
-//                    darkIcons = !darkTheme
-//                )
-//                systemUiController.setNavigationBarColor(
-//                    color = if (darkTheme) Color(0xFF121212) else Color.White,
-//                    darkIcons = !darkTheme
-//                )
-//            }
-//
-//            InstagramAppTheme {
-//                val backgroundColor = if (isSystemInDarkTheme()) Color.Black else Color.White
-//                WindowCompat.getInsetsController(window, window.decorView).apply {
-//                    isAppearanceLightStatusBars = !isSystemInDarkTheme()
-//                    isAppearanceLightNavigationBars = !isSystemInDarkTheme()
-//                }
-//                window.statusBarColor = backgroundColor.toArgb()
-//                window.navigationBarColor = backgroundColor.toArgb()
-//
-//                StartingPoint()
-//            }
-//        }
-//    }
-//}
+import com.instagramapp.mvvm_module.LanguageViewModelFactory
+import com.instagramapp.mvvm_module.ThemeViewModelFactory
+import com.instagramapp.ui.theme.InstagramAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            // Use the factories to create ViewModels
+            val languageVM: LanguageViewModel = viewModel(
+                factory = LanguageViewModelFactory(this)
+            )
+            val themeVM: ThemeViewModel = viewModel(
+                factory = ThemeViewModelFactory(this)
+            )
+
             InstagramAppTheme {
-                StartingPoint()
+                StartingPoint(languageVM, themeVM)
             }
         }
     }
@@ -95,16 +62,19 @@ object Screen {
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
-    InstagramAppTheme {
+    InstagramAppTheme() {
         LoginScreen(navController = rememberNavController(), themeVM = viewModel())
     }
 }
 
 @Composable
-fun StartingPoint() {
+fun StartingPoint(
+    languageVM: LanguageViewModel,
+    themeVM: ThemeViewModel
+) {
     val nc = rememberNavController()
-    val themeVM: ThemeViewModel = viewModel()
-    val languageVM: LanguageViewModel = viewModel()
+//    val themeVM: ThemeViewModel = viewModel()
+//    val languageVM: LanguageViewModel = viewModel()
 
     val backgroundColor = if (themeVM.dark.value) DarkBackground else Color.White
     val duration = 400
@@ -197,16 +167,17 @@ fun StartingPoint() {
     }
 }
 
-fun setAppLocale(context: Context, languageCode: String) {
-    val locale = Locale(languageCode)
-    Locale.setDefault(locale)
-
-    val config = Configuration()
-    config.setLocale(locale)
-
-    context.resources.updateConfiguration(config, context.resources.displayMetrics)
-
-    val intent = Intent(context, MainActivity::class.java)
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-    context.startActivity(intent)
-}
+//fun setAppLocale(context: Context, languageCode: String) {
+//    val locale = Locale(languageCode)
+//    Locale.setDefault(locale)
+//
+//    val config = Configuration()
+//    config.setLocale(locale)
+//
+//    context.resources.updateConfiguration(config, context.resources.displayMetrics)
+//
+//    // Restart the activity to apply the new locale
+//    val intent = Intent(context, MainActivity::class.java)
+//    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+//    context.startActivity(intent)
+//}

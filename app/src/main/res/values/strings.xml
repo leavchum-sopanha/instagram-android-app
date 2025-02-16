@@ -6,4 +6,27 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="share_profile">Share Profile</string>
     <string name="switch_language">Switch Language</string>
+    <string name="discover_people">Discover People</string>
+    <string name="see_all">See all</string>
+    <string name="follow">Follow</string>
+    <string name="recent">Recent</string>
+    <string name="notification">Notification</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="last_7_days">Last 7 days</string>
+    <string name="messages">Messages</string>
+    <string name="requests">Requests</string>
+    <string name="new_post">New post</string>
+    <string name="next">Next</string>
+    <string name="your_story">Your story</string>
+    <string name="light_mode">Light Mode</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="log_out">Log out</string>
+    <string name="phone_email_username">Phone number, email or username</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="forgot_login">Forgot your login details? Get help logging in.</string>
+    <string name="or">OR</string>
+    <string name="login_facebook">Log in with Facebook</string>
+    <string name="dont_have_account">Don\'t have an account? Sign up.</string>
+    <string name="our_team_members">Our Team Members</string>
 </resources>

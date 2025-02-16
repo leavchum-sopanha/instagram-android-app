@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,7 @@ import com.example.androidapp_test.ui.theme.DarkText
 import com.example.androidapp_test.ui.theme.LightBackground
 import com.example.androidapp_test.ui.theme.LightSurface
 import com.example.androidapp_test.ui.theme.LightText
+import com.instagramapp.R
 import com.instagramapp.mvvm_module.ThemeViewModel
 
 data class UserProfile(
@@ -59,14 +61,14 @@ fun DiscoverPeopleSection(themeVM: ThemeViewModel) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Discover People",
+                text  = stringResource(R.string.discover_people),
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = textColor
             )
             Text(
-                text = "See All",
-                color = Color.Blue, // You can also make this theme-aware if needed
+                text = stringResource(R.string.see_all),
+                color = Color.Blue,
                 fontSize = 14.sp
             )
         }
@@ -123,7 +125,7 @@ fun DiscoverPeopleSection(themeVM: ThemeViewModel) {
                                 onClick = { /* Follow User */ },
                                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF5661E0)) // Keep button color consistent
                             ) {
-                                Text(text = "Follow", color = Color.White)
+                                Text(text = stringResource(R.string.follow), color = Color.White)
                             }
                         }
                     }

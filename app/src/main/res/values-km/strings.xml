@@ -1,9 +1,32 @@
 <resources>
     <string name="app_name">អេប Instagram</string>
-    <string name="edit_profile">កែប្រែគណនី</string>
-    <string name="share_profile">ចែករំលែកគណនី</string>
-    <string name="posts">ប្រកាស</string>
+    <string name="posts">ការបង្ហោះ</string>
     <string name="followers">អ្នកតាម</string>
     <string name="following">កំពុងតាម</string>
+    <string name="edit_profile">កែប្រែគណនី</string>
+    <string name="share_profile">ចែករំលែកគណនី</string>
     <string name="switch_language">ប្តូរភាសា</string>
+    <string name="discover_people">ស្វែងរកអ្នកដទៃ</string>
+    <string name="see_all">មើលទាំងអស់</string>
+    <string name="follow">តាម</string>
+    <string name="recent">ថ្មីៗ</string>
+    <string name="notification">ការជូនដំណឹង</string>
+    <string name="yesterday">ម្សិលមិញ</string>
+    <string name="last_7_days">៧ថ្ងៃមុន</string>
+    <string name="messages">សារ</string>
+    <string name="requests">ស្នើរ</string>
+    <string name="new_post">ការបង្ហោះថ្មី</string>
+    <string name="next">បន្ទាប់</string>
+    <string name="your_story">រឿងរបស់អ្នក</string>
+    <string name="light_mode">ផ្ទាំងភ្លឺ</string>
+    <string name="dark_mode">ផ្ទាំងងងឹត</string>
+    <string name="log_out">ចាកចេញ</string>
+    <string name="phone_email_username">លេខទូរស័ព្ទ, អ៊ីម៉ែល ឬឈ្មោះអ្នកប្រើ</string>
+    <string name="password">ពាក្យសម្ងាត់</string>
+    <string name="log_in">ចូល</string>
+    <string name="forgot_login">ភ្លេចព័ត៌មានចូលរបស់អ្នក? ទទួលជំនួយក្នុងការចូល។</string>
+    <string name="or">ឬ</string>
+    <string name="login_facebook">ចូលដោយប្រើ Facebook</string>
+    <string name="dont_have_account">មិនមានគណនី? ចុះឈ្មោះ។</string>
+    <string name="our_team_members">សមាជិកក្រុម</string>
 </resources>
