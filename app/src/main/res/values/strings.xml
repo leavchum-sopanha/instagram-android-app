@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">InstagramApp</string>
+    <string name="posts">Posts</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="share_profile">Share Profile</string>
+    <string name="switch_language">Switch Language</string>
 </resources>

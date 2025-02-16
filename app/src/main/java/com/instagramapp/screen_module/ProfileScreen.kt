@@ -1,5 +1,6 @@
 package com.instagramapp.screen_module
 
+import android.content.Context
 import android.provider.CalendarContract
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,6 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.GridOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.VideoLibrary
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.outlined.AddBox
 import androidx.compose.material.icons.outlined.ArrowBackIos
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
@@ -23,6 +26,8 @@ import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.ModeEditOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,68 +37,172 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.instagramapp.Screen
+import androidx.compose.runtime.MutableState
+import com.instagramapp.mvvm_module.LanguageViewModel
+import com.instagramapp.mvvm_module.ThemeViewModel
+import androidx.compose.ui.res.stringResource
+import com.instagramapp.R
+import androidx.compose.ui.platform.LocalContext
+import com.example.androidapp_test.ui.theme.DarkBackground
+import com.example.androidapp_test.ui.theme.DarkSurface
+import com.example.androidapp_test.ui.theme.DarkText
+import com.example.androidapp_test.ui.theme.LightBackground
+import com.example.androidapp_test.ui.theme.LightSurface
+import com.example.androidapp_test.ui.theme.LightText
 
 @Composable
-fun ProfileScreen(navController: NavHostController) {
-    LazyColumn(
+fun ProfileScreen(
+    navController: NavHostController,
+    themeVM: ThemeViewModel,
+    languageVM: LanguageViewModel
+) {
+    val backgroundColor = if (themeVM.dark.value) DarkBackground else LightBackground
+    val textColor = if (themeVM.dark.value) DarkText else LightText
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(backgroundColor)
     ) {
-        item { TopMenu() }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-        item { ProfileHeader() }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-        item { ActionButtons() }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-        item { DiscoverPeopleSection() }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-        item { StoryHighlights() }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-        item { ProfileGridLayout() }
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            item { TopMenuProfile(navController, themeVM, languageVM, textColor, backgroundColor) }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            item { ProfileHeader(languageVM, textColor) }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            item { ActionButtons(languageVM, textColor) }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            item { DiscoverPeopleSection(themeVM) }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            item { StoryHighlights(textColor) }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            item { ProfileGridLayout(textColor) }
+        }
     }
 }
 
 @Composable
-fun TopMenu() {
+fun TopMenuProfile(
+    navController: NavHostController,
+    themeVM: ThemeViewModel,
+    languageVM: LanguageViewModel,
+    textColor: Color,
+    backgroundColor: Color
+) {
+    val isMenuExpanded = remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
-
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = "sopanhahaha", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        Icon(imageVector = Icons.Outlined.KeyboardArrowDown, contentDescription = "Dropdown")
+        Text(text = "leavchum_sopanha", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = textColor)
+        Icon(imageVector = Icons.Outlined.KeyboardArrowDown, contentDescription = "Dropdown", tint = textColor)
 
         Spacer(modifier = Modifier.weight(1f))
 
-        IconButton(onClick = { /* Handle edit action */ }) {
-            Icon(imageVector = Icons.Outlined.AddBox, contentDescription = "Add")
+        // Add button
+        IconButton(onClick = { navController.navigate(Screen.ADD) }) {
+            Icon(imageVector = Icons.Outlined.AddBox, contentDescription = "Add", tint = textColor)
         }
-        IconButton(onClick = { /* Handle edit action */ }) {
-            Icon(imageVector = Icons.Outlined.Menu, contentDescription = "Setting")
+
+        // Settings button with dropdown menu
+        Box {
+            IconButton(onClick = { isMenuExpanded.value = !isMenuExpanded.value }) {
+                Icon(imageVector = Icons.Outlined.Menu, contentDescription = "Settings", tint = textColor)
+            }
+
+            // Dropdown menu
+            DropdownMenu(
+                expanded = isMenuExpanded.value,
+                onDismissRequest = { isMenuExpanded.value = false },
+                modifier = Modifier.background(if (themeVM.dark.value) DarkSurface else LightSurface)
+            ) {
+                // Dark Mode Toggle
+                DropdownMenuItem(
+                    onClick = {
+                        if (themeVM.dark.value) {
+                            themeVM.toLightMode()
+                        } else {
+                            themeVM.toDarkMode()
+                        }
+                        isMenuExpanded.value = false
+                    },
+                    text = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                text = if (themeVM.dark.value) "Light Mode" else "Dark Mode",
+                                fontSize = 16.sp,
+                                modifier = Modifier.weight(1f),
+                                color = textColor)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Icon(
+                                imageVector = if (themeVM.dark.value) Icons.Default.LightMode else Icons.Default.DarkMode, // Use themeVM.dark.value
+                                contentDescription = if (themeVM.dark.value) "Light Mode" else "Dark Mode", // Use themeVM.dark.value
+                                tint = textColor
+                            )
+                        }
+                    }
+                )
+
+                // Language Toggle
+                DropdownMenuItem(
+                    onClick = {
+                        languageVM.switchLanguage(context)
+                        isMenuExpanded.value = false
+                    },
+                    text = {
+                        Text(
+                            text = "Switch Language (${languageVM.currentLanguage.value})",
+                            fontSize = 16.sp,
+                            color = textColor)
+                    }
+                )
+
+                // Logout
+                DropdownMenuItem(
+                    onClick = {
+                        navController.navigate(Screen.LOGIN)
+                        isMenuExpanded.value = false
+                    },
+                    text = {
+                        Text(
+                            text = "Log out",
+                            fontSize = 16.sp,
+                            color = textColor)
+                    }
+                )
+
+            }
         }
     }
 }
 
 @Composable
-fun ProfileHeader() {
+fun ProfileHeader(languageVM: LanguageViewModel, textColor: Color) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()
-            .padding(bottom =  16.dp)
+            .padding(bottom = 16.dp)
             .padding(horizontal = 16.dp)
     ) {
+        // Profile Picture
         Surface(
             shape = CircleShape,
             modifier = Modifier
                 .size(80.dp)
-                .border(2.dp, Color.Gray, CircleShape),
+                .border(1.dp, Color.LightGray, CircleShape),
             color = Color.LightGray
         ) {
             Image(
@@ -104,41 +213,34 @@ fun ProfileHeader() {
             )
         }
 
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "9", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-            Text(text = "posts", fontSize = 16.sp,)
+        // Posts, Followers, Following
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "9", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = textColor)
+            Text(text = stringResource(R.string.posts), fontSize = 16.sp, color = textColor)
         }
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "100", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-            Text(text = "followers", fontSize = 16.sp,)
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "100", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = textColor)
+            Text(text = stringResource(R.string.followers), fontSize = 16.sp, color = textColor)
         }
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "159", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-            Text(text = "following", fontSize = 16.sp,)
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "159", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = textColor)
+            Text(text = stringResource(R.string.following), fontSize = 16.sp, color = textColor)
         }
     }
-
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
         Column {
-            Text(text = "Sopanha LEAVCHUM", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            Text(text = "Nothing here!", fontSize = 14.sp)
+            Text(text = "Sopanha LEAVCHUM", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = textColor)
+            Text(text = "Nothing here!", fontSize = 14.sp, color = textColor)
         }
-
     }
 }
 
 @Composable
-fun ActionButtons() {
+fun ActionButtons(languageVM: LanguageViewModel, textColor: Color) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -148,25 +250,25 @@ fun ActionButtons() {
         OutlinedButton(
             onClick = { /* Edit Profile Action */ },
             modifier = Modifier.weight(1f),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = textColor),
             shape = RoundedCornerShape(8.dp)
         ) {
-            Text(text = "Edit Profile", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Text(text = stringResource(R.string.edit_profile), fontSize = 16.sp, fontWeight = FontWeight.Bold)
         }
         Spacer(modifier = Modifier.width(8.dp))
         OutlinedButton(
             onClick = { /* Share Profile Action */ },
             modifier = Modifier.weight(1f),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = textColor),
             shape = RoundedCornerShape(8.dp)
         ) {
-            Text(text = "Share Profile", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Text(text = stringResource(R.string.share_profile), fontSize = 16.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
 
 @Composable
-fun StoryHighlights() {
+fun StoryHighlights(textColor: Color) {
     val years = listOf("2025\uD83C\uDF89", "2024\uD83E\uDEF6", "2023\uD83E\uDD1F")
     val imageUrls = listOf(
         "https://instagram.fpnh18-3.fna.fbcdn.net/v/t15.5256-10/472172722_958287419542765_3936859893918799611_n.jpg?stp=c0.90.1080.1080a_dst-jpg_e15_s150x150_tt6&_nc_ht=instagram.fpnh18-3.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2AFbifvdeaRm_mdBdYV7-s2gxaOShcS0i5exK4jUAr_VZIFWlZQkuaAICV_xAqLIMnw&_nc_ohc=Tw7F3keRP2UQ7kNvgHqTLc7&_nc_gid=645a97025b30414797b398d69bcb9238&edm=AGXveE0AAAAA&ccb=7-5&oh=00_AYDUAhPm4zPRwkNBSiMKjIO4tPTfM0dfCl_VwKgFlVNgkw&oe=67B35FB9&_nc_sid=522435",
@@ -199,41 +301,32 @@ fun StoryHighlights() {
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = years[index], fontSize = 12.sp)
+                Text(text = years[index], fontSize = 12.sp, color = textColor)
             }
         }
     }
 }
 
-
 @Composable
-fun ProfileGridLayout() {
+fun ProfileGridLayout(textColor: Color) {
     val images = listOf(
-        "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg",
-        "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg",
-        "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg",
-        "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg",
-        "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg",
-        "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg",
-        "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg",
-        "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg",
-        "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg"
+        "https://scontent.fpnh9-1.fna.fbcdn.net/v/t39.30808-6/467423980_1760677718001428_3031366759025337024_n.jpg?stp=c0.79.720.720a_cp6_dst-jpg_s206x206_tt6&_nc_cat=109&ccb=1-7&_nc_sid=50ad20&_nc_eui2=AeH0opf83yJZalys0GQB0d-s_aLah16I25v9otqHXojbm7rCzuy65yoRLelM5WddgMwaodHdqfRo5v_vWUIlPQtD&_nc_ohc=Ks4v76HKBF8Q7kNvgFLiU9z&_nc_oc=AdixDu_1QUoxtveIgPAH2p2E8MdRuwZ-yQr-4AWsaJ48s4yoCJLDLkjeuz4KW_0Rn3A&_nc_zt=23&_nc_ht=scontent.fpnh9-1.fna&_nc_gid=ASsE4seC0f5HvfluJ52MS14&oh=00_AYCxdDN-e-fW2Z4JT1SnTsP0dkXXSO7DGME9NOlewVcYpw&oe=67B61E68",
+        "https://scontent.fpnh9-1.fna.fbcdn.net/v/t39.30808-6/467326376_1760676798001520_2107614633406651451_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFJcOpnq9-OG1GmR5WXxYmr5ZaQWBeJY0TllpBYF4ljRHQUix1p-U9LYHi9ojMKM2LWmVN4oqYtTXV12x5fEFXw&_nc_ohc=ekt0FKuw9t8Q7kNvgGtl3VP&_nc_oc=AdiRA47oXGH__e458u_A8oxhTd5cwdgmVhS2xcbF59sGMkZiF1bC0aMBJBbN7D_Khpc&_nc_zt=23&_nc_ht=scontent.fpnh9-1.fna&_nc_gid=Amcsp7G949oae77Eo2mUj8H&oh=00_AYAoqJGBKNEeWhCDqMC_IQnlmTuQsVOHib-hSxBXk6TwYA&oe=67B628E8",
+        "https://scontent.fpnh9-1.fna.fbcdn.net/v/t39.30808-6/464014567_1741231933279340_9057204410751260605_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeE325vFV0_JBgAj7S4GMVuK25jLgvpwDO_bmMuC-nAM71Xi7Bbxs0iJDGBAx4JXfT9c7iNP-kcrzv5ImVF9n_T6&_nc_ohc=2H7sOiA6MYsQ7kNvgH27Ws5&_nc_oc=AdhVx3KAZZXozsvEw9c0hB8wEzOdSqYDUwF7BYl1zBBYwYUibW2X9yacjOykV7t9V2E&_nc_zt=23&_nc_ht=scontent.fpnh9-1.fna&_nc_gid=Axym9akGIGKj_UO2hpoYmW_&oh=00_AYBq0qm7ww_qc9cdaUbxnk5ooKJLeWkfHHOP1JB0amyWXg&oe=67B61771",
     )
 
     Column(
-        modifier = Modifier.
-            fillMaxWidth()
-        ) {
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 4.dp, bottom = 16.dp)
-            ,
+                .padding(top = 4.dp, bottom = 16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Icon(imageVector = Icons.Default.GridOn, contentDescription = "Posts")
-            Icon(imageVector = Icons.Default.VideoLibrary, contentDescription = "Videos")
-            Icon(imageVector = Icons.Default.Person, contentDescription = "Tagged")
+            Icon(imageVector = Icons.Default.GridOn, contentDescription = "Posts", tint = textColor)
+            Icon(imageVector = Icons.Default.VideoLibrary, contentDescription = "Videos", tint = textColor)
+            Icon(imageVector = Icons.Default.Person, contentDescription = "Tagged", tint = textColor)
         }
 
         val rows = images.chunked(3)
@@ -250,8 +343,6 @@ fun ProfileGridLayout() {
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-//                            .padding(1.dp) // Optional padding
-//                            .clip(RoundedCornerShape(8.dp))
                             .border(1.dp, Color.LightGray)
                     )
                 }

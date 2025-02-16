@@ -1,6 +1,7 @@
 package com.instagramapp.screen_module
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -22,9 +23,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.instagramapp.mvvm_module.ThemeViewModel
 
 @Composable
-fun PostSection(post: Post) {
+fun PostSection(post: Post, themeVM: ThemeViewModel) {
+    // Determine colors based on the theme
+    val textColor = if (themeVM.dark.value) Color.White else Color.Black
+    val iconColor = if (themeVM.dark.value) Color.White else Color.Black
+    val borderColor = if (themeVM.dark.value) Color.DarkGray else Color.LightGray
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,15 +47,17 @@ fun PostSection(post: Post) {
                 painter = rememberAsyncImagePainter(post.profileImage),
                 contentDescription = "Profile Picture",
                 modifier = Modifier
-                    .size(30.dp)
+                    .size(40.dp)
                     .clip(CircleShape)
+                    .border(1.dp, borderColor, CircleShape),
+                contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = post.userName,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = textColor // Use theme-aware text color
             )
         }
 
@@ -75,14 +84,14 @@ fun PostSection(post: Post) {
                     Icon(
                         imageVector = Icons.Outlined.FavoriteBorder,
                         contentDescription = "Like",
-                        tint = Color.Black,
-                        modifier = Modifier.size(28.dp)
-                    )
+                        tint = iconColor, // Use theme-aware icon color
+                        modifier = Modifier.size(28.dp))
                 }
                 Text(
                     post.likes,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = textColor // Use theme-aware text color
                 )
 
                 Spacer(modifier = Modifier.width(10.dp))
@@ -91,14 +100,14 @@ fun PostSection(post: Post) {
                     Icon(
                         imageVector = Icons.Outlined.ModeComment,
                         contentDescription = "Comment",
-                        tint = Color.Black,
-                        modifier = Modifier.size(28.dp)
-                    )
+                        tint = iconColor, // Use theme-aware icon color
+                        modifier = Modifier.size(28.dp))
                 }
                 Text(
                     post.comments,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = textColor // Use theme-aware text color
                 )
 
                 Spacer(modifier = Modifier.width(10.dp))
@@ -107,7 +116,7 @@ fun PostSection(post: Post) {
                     Icon(
                         imageVector = Icons.Default.Send,
                         contentDescription = "Share",
-                        tint = Color.Black,
+                        tint = iconColor, // Use theme-aware icon color
                         modifier = Modifier
                             .size(28.dp)
                             .padding(bottom = 5.dp)
@@ -117,7 +126,8 @@ fun PostSection(post: Post) {
                 Text(
                     post.shares,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = textColor // Use theme-aware text color
                 )
             }
 
@@ -125,24 +135,24 @@ fun PostSection(post: Post) {
                 Icon(
                     imageVector = Icons.Default.BookmarkBorder,
                     contentDescription = "Save",
-                    tint = Color.Black,
+                    tint = iconColor, // Use theme-aware icon color
                     modifier = Modifier.size(28.dp)
                 )
             }
         }
 
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
-
         ) {
             Text(
                 text = post.userName,
                 fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = textColor // Use theme-aware text color
             )
 
             Spacer(modifier = Modifier.width(5.dp))
@@ -150,6 +160,7 @@ fun PostSection(post: Post) {
             Text(
                 text = post.description,
                 fontSize = 14.sp,
+                color = textColor // Use theme-aware text color
             )
         }
     }

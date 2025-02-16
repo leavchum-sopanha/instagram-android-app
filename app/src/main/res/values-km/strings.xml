@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">អេប Instagram</string>
+    <string name="edit_profile">កែប្រែគណនី</string>
+    <string name="share_profile">ចែករំលែកគណនី</string>
+    <string name="posts">ប្រកាស</string>
+    <string name="followers">អ្នកតាម</string>
+    <string name="following">កំពុងតាម</string>
+    <string name="switch_language">ប្តូរភាសា</string>
+</resources>

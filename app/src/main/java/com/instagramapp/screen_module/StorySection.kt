@@ -18,9 +18,15 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import androidx.compose.material3.Text
 import androidx.navigation.NavHostController
+import com.instagramapp.mvvm_module.ThemeViewModel
 
 @Composable
-fun StorySection(navController: NavHostController) {
+fun StorySection(navController: NavHostController, themeVM: ThemeViewModel) {
+    // Determine colors based on the theme
+    val textColor = if (themeVM.dark.value) Color.White else Color.Black
+    val borderColor = if (themeVM.dark.value) Color.DarkGray else Color.LightGray
+    val surfaceColor = if (themeVM.dark.value) Color.DarkGray else Color.LightGray
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -50,8 +56,10 @@ fun StorySection(navController: NavHostController) {
                 ) {
                     Surface(
                         shape = CircleShape,
-                        modifier = Modifier.size(70.dp).border(1.dp, Color.LightGray, CircleShape),
-                        color = Color.LightGray
+                        modifier = Modifier
+                            .size(70.dp)
+                            .border(1.dp, borderColor, CircleShape), // Use theme-aware border color
+                        color = surfaceColor // Use theme-aware surface color
                     ) {
                         Image(
                             painter = rememberAsyncImagePainter(stories[index].second),
@@ -65,21 +73,10 @@ fun StorySection(navController: NavHostController) {
                         text = stories[index].first,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.widthIn(max = 70.dp)
-                    )
+                        color = textColor, // Use theme-aware text color
+                        modifier = Modifier.widthIn(max = 70.dp))
                 }
             }
         }
     }
 }
-
-//@Composable
-//fun StorySectionpreview(navController: NavHostController) {
-//    Column(
-//        modifier = Modifier.fillMaxSize()
-//    ) {
-//        StorySection(navController = navController) // Pass the navController here
-//    }
-//}
-
-

@@ -1,6 +1,7 @@
 package com.instagramapp.screen_module
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -19,15 +20,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.example.androidapp_test.ui.theme.DarkBackground
+import com.example.androidapp_test.ui.theme.LightBackground
 import com.instagramapp.Screen
+import com.instagramapp.mvvm_module.ThemeViewModel
 
 
 @Composable
-fun FooterSection(navController: NavHostController) {
+fun FooterSection(navController: NavHostController, themeVM: ThemeViewModel) {
+    val iconColor = if (themeVM.dark.value) Color.White else Color.Black // Use theme-aware icon color
+    val backgroundColor = if (themeVM.dark.value) DarkBackground else LightBackground // Use theme-aware background color
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(65.dp)
+            .background(backgroundColor)
             .padding(top = 0.dp, start = 16.dp, end = 32.dp, bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -36,7 +44,7 @@ fun FooterSection(navController: NavHostController) {
             Icon(
                 imageVector = Icons.Default.Home,
                 contentDescription = "Home",
-                tint = Color.Black,
+                tint = iconColor, // Use theme-aware icon color
                 modifier = Modifier.size(30.dp)
             )
         }
@@ -45,7 +53,7 @@ fun FooterSection(navController: NavHostController) {
             Icon(
                 Icons.Default.Search,
                 contentDescription = "Search",
-                tint = Color.Black,
+                tint = iconColor, // Use theme-aware icon color
                 modifier = Modifier.size(30.dp)
             )
         }
@@ -54,19 +62,10 @@ fun FooterSection(navController: NavHostController) {
             Icon(
                 imageVector = Icons.Outlined.AddBox,
                 contentDescription = "Add",
-                tint = Color.Black,
+                tint = iconColor, // Use theme-aware icon color
                 modifier = Modifier.size(30.dp)
             )
         }
-
-//        IconButton(onClick = { navController.navigate("favorite_screen") }) {
-//            Icon(
-//                imageVector = Icons.Outlined.VideoLibrary,
-//                contentDescription = "Favorite",
-//                tint = Color.Black,
-//                modifier = Modifier.size(30.dp)
-//            )
-//        }
 
         IconButton(
             onClick = { navController.navigate(Screen.PROFILE) },
@@ -78,7 +77,7 @@ fun FooterSection(navController: NavHostController) {
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(30.dp)
-                    .border(2.dp, Color.Gray, CircleShape)
+                    .border(2.dp, if (themeVM.dark.value) Color.DarkGray else Color.Gray, CircleShape) // Use theme-aware border color
             )
         }
     }

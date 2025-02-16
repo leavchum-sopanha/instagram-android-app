@@ -3,6 +3,7 @@ package com.instagramapp.screen_module
 import android.provider.CalendarContract
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,24 +28,34 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.instagramapp.R
+import com.instagramapp.mvvm_module.ThemeViewModel
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.net.URLEncoder
 
 @Composable
-fun InboxScreen(navController: NavHostController) {
-    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
-        TopMenu(navController)
+fun InboxScreen(navController: NavHostController, themeVM: ThemeViewModel) {
+    val backgroundColor = if (themeVM.dark.value) Color.Black else Color.White
+    val textColor = if (themeVM.dark.value) Color.White else Color.Black
+    val iconColor = if (themeVM.dark.value) Color.White else Color.Black
+    val secondaryTextColor = if (themeVM.dark.value) Color.LightGray else Color.Gray
+    val surfaceColor = if (themeVM.dark.value) Color.DarkGray else Color.LightGray
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        TopMenu(navController, iconColor, textColor) // Pass theme-aware colors
         Box(modifier = Modifier.fillMaxWidth()) {
-            SearchBar()
+            SearchBar(themeVM = themeVM) // Pass themeVM to SearchBar
         }
-        StorySection(navController)
-        MessagesSection(navController)
+        StorySection(navController, themeVM = themeVM) // Pass themeVM to StorySection
+        MessagesSection(navController, textColor, secondaryTextColor, iconColor, surfaceColor) // Pass theme-aware colors
     }
 }
 
 @Composable
-fun TopMenu(navController: NavHostController) {
+fun TopMenu(navController: NavHostController, iconColor: Color, textColor: Color) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -54,46 +65,84 @@ fun TopMenu(navController: NavHostController) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(imageVector = Icons.Outlined.ArrowBackIos, contentDescription = "Back")
+                Icon(
+                    imageVector = Icons.Outlined.ArrowBackIos,
+                    contentDescription = "Back",
+                    tint = iconColor // Use theme-aware icon color
+                )
             }
-            Text(text = "sopanhahaha", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text(
+                text = "sopanhahaha",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = textColor // Use theme-aware text color
+            )
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = { /* Handle edit action */ }) {
-            Icon(imageVector = Icons.Outlined.ModeEditOutline, contentDescription = "Edit")
+            Icon(
+                imageVector = Icons.Outlined.ModeEditOutline,
+                contentDescription = "Edit",
+                tint = iconColor // Use theme-aware icon color
+            )
         }
     }
 }
 
 @Composable
-fun MessagesSection(navController: NavHostController) {
+fun MessagesSection(
+    navController: NavHostController,
+    textColor: Color,
+    secondaryTextColor: Color,
+    iconColor: Color,
+    surfaceColor: Color
+) {
     val inboxes = listOf(
         Inbox(
-            name = "User 1",
-            messagePreview = "Hello, how are you?",
-            imageRes = R.drawable.sopanha,
-            lastSeenDate = "4d",
+            name = "phalla_chanheang",
+            messagePreview = "I'm good!",
+            imageRes = R.drawable.chanheang,
+            profilePicture = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+            followers = 1200,
+            lastSeenDate = "1d",
             messages = listOf(
                 ChatMessage("other", "Hello, how are you?", "4d"),
                 ChatMessage("me", "I'm good!", "4d")
             )
         ),
         Inbox(
-            name = "User 2",
-            messagePreview = "Where are you?",
-            imageRes = R.drawable.sopanha,
-            lastSeenDate = "2d",
+            name = "rath_sopangna",
+            messagePreview = "I'm here!",
+            imageRes = R.drawable.sopangna,
+            profilePicture = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+            followers = 800,
+            lastSeenDate = "4d",
             messages = listOf(
-                ChatMessage("me", "I'm here!", "2d"),
-                ChatMessage("other", "Great!", "2d")
+                ChatMessage("me", "I'm here!", "4d"),
+                ChatMessage("other", "Great!", "4d")
             )
         )
     )
 
-    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-        Text("Messages", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Messages",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = textColor // Use theme-aware text color
+        )
         Spacer(modifier = Modifier.weight(1f))
-        Text("Requests", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFF5661E0))
+        Text(
+            text = "Requests",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF5661E0) // Keep this color consistent or make it theme-aware
+        )
     }
 
     LazyColumn {
@@ -103,7 +152,6 @@ fun MessagesSection(navController: NavHostController) {
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp)
                     .clickable {
-                        // Encode the Inbox object as JSON
                         val inboxJson = Json.encodeToString(inbox)
                         navController.navigate("inbox/${URLEncoder.encode(inboxJson, "UTF-8")}")
                     },
@@ -115,21 +163,44 @@ fun MessagesSection(navController: NavHostController) {
                     modifier = Modifier
                         .size(50.dp)
                         .clip(CircleShape)
-                        .background(Color.Gray),
+                        .background(surfaceColor) // Use theme-aware background color
+                        .border(1.dp, surfaceColor, CircleShape), // Use theme-aware border color
                     contentScale = ContentScale.Crop
                 )
                 Column(modifier = Modifier.padding(start = 12.dp)) {
-                    Text(text = inbox.name, fontSize = 16.sp)
+                    Text(
+                        text = inbox.name,
+                        fontSize = 16.sp,
+                        color = textColor // Use theme-aware text color
+                    )
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = inbox.messagePreview, fontSize = 12.sp, color = Color.Gray)
+                        Text(
+                            text = inbox.messagePreview,
+                            fontSize = 12.sp,
+                            color = secondaryTextColor // Use theme-aware secondary text color
+                        )
                         Spacer(modifier = Modifier.width(3.dp))
-                        Icon(imageVector = Icons.Default.Circle, contentDescription = "Time", tint = Color.LightGray, modifier = Modifier.size(4.dp))
+                        Icon(
+                            imageVector = Icons.Default.Circle,
+                            contentDescription = "Time",
+                            tint = secondaryTextColor, // Use theme-aware icon color
+                            modifier = Modifier.size(4.dp)
+                        )
                         Spacer(modifier = Modifier.width(3.dp))
-                        Text(text = inbox.lastSeenDate, fontSize = 12.sp, color = Color.Gray)
+                        Text(
+                            text = inbox.lastSeenDate,
+                            fontSize = 12.sp,
+                            color = secondaryTextColor // Use theme-aware secondary text color
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                Icon(imageVector = Icons.Outlined.CameraAlt, contentDescription = "Camera", tint = Color.Gray, modifier = Modifier.size(25.dp))
+                Icon(
+                    imageVector = Icons.Outlined.CameraAlt,
+                    contentDescription = "Camera",
+                    tint = iconColor, // Use theme-aware icon color
+                    modifier = Modifier.size(25.dp)
+                )
             }
         }
     }

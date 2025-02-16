@@ -1,0 +1,176 @@
+package com.instagramapp.screen_module
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.KeyboardArrowLeft
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.instagramapp.mvvm_module.ThemeViewModel
+
+@Composable
+fun NotificationScreen(navController: NavController, themeVM: ThemeViewModel) {
+    // Determine colors based on the theme
+    val backgroundColor = if (themeVM.dark.value) Color.Black else Color.White
+    val textColor = if (themeVM.dark.value) Color.White else Color.Black
+    val surfaceColor = if (themeVM.dark.value) Color.DarkGray else Color.LightGray
+    val iconColor = if (themeVM.dark.value) Color.White else Color.Black
+    val buttonColor = if (themeVM.dark.value) Color(0xFF5661E0) else Color(0xFF5661E0) // Keep button color consistent
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            NotificationHeader(navController, iconColor, textColor) // Pass theme-aware colors
+        }
+
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            SectionHeader("Yesterday", textColor)
+            NotificationItem(
+                username = "phchorng and iam_unaaaa",
+                action = "shared notes",
+                time = "11h",
+                imageUrl = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+                textColor = textColor,
+                isFollowButton = false,
+                buttonColor = buttonColor
+            )
+            NotificationItem(
+                username = "tuxglobalinstitute",
+                action = "added a photo to their story",
+                time = "14h",
+                imageUrl = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+                textColor = textColor,
+                isFollowButton = false,
+                buttonColor = buttonColor
+            )
+            SectionHeader("Last 7 days", textColor)
+            NotificationItem(
+                username = "rathapich_",
+                action = "posted a thread you might like:",
+                time = "2d",
+                imageUrl = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+                textColor = textColor,
+                isFollowButton = false,
+                buttonColor = buttonColor
+            )
+            NotificationItem(
+                username = "Li Sundika, Chan Veasna Neang",
+                action = "shared 14 photos.",
+                time = "4d",
+                imageUrl = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+                textColor = textColor,
+                isFollowButton = false,
+                buttonColor = buttonColor
+            )
+            NotificationItem(
+                username = "li_sdika_",
+                action = "just shared a post.",
+                time = "4d",
+                imageUrl = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+                textColor = textColor,
+                isFollowButton = false,
+                buttonColor = buttonColor
+            )
+            NotificationItem(
+                username = "pheach.phearom.1",
+                action = "who you might know, is on Instagram.",
+                time = "5d",
+                imageUrl = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+                textColor = textColor,
+                isFollowButton = true,
+                buttonColor = buttonColor
+            )
+        }
+    }
+}
+
+@Composable
+fun NotificationItem(
+    username: String,
+    action: String,
+    time: String,
+    imageUrl: String,
+    textColor: Color,
+    isFollowButton: Boolean = false,
+    buttonColor: Color
+) {
+    Row(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
+        AsyncImage(
+            model = imageUrl,
+            contentDescription = null,
+            modifier = Modifier.size(48.dp).clip(CircleShape)
+        )
+        Spacer(modifier = Modifier.width(12.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = "$username $action",
+                fontSize = 14.sp,
+                color = textColor // Use theme-aware text color
+            )
+            Text(
+                text = time,
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant // Use theme-aware secondary text color
+            )
+        }
+        if (isFollowButton) {
+            Button(
+                shape = RoundedCornerShape(8.dp),
+                onClick = { /* Follow User */ },
+                colors = ButtonDefaults.buttonColors(containerColor = buttonColor) // Use theme-aware button color
+            ) {
+                Text(text = "Follow", color = Color.White)
+            }
+        }
+    }
+}
+
+@Composable
+fun NotificationHeader(navController: NavController, iconColor: Color, textColor: Color) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(onClick = { navController.popBackStack() }) {
+            Icon(
+                imageVector = Icons.Outlined.KeyboardArrowLeft,
+                contentDescription = "Back",
+                tint = iconColor // Use theme-aware icon color
+            )
+        }
+        Text(
+            text = "Notification",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = textColor // Use theme-aware text color
+        )
+    }
+}
+
+@Composable
+fun SectionHeader(title: String, textColor: Color) {
+    Text(
+        text = title,
+        fontSize = 16.sp,
+        modifier = Modifier.padding(vertical = 8.dp),
+        color = textColor // Use theme-aware text color
+    )
+}

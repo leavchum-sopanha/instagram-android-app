@@ -7,10 +7,11 @@ data class Inbox(
     val name: String,
     val messagePreview: String,
     val imageRes: Int,
+    val profilePicture: String,
+    val followers: Int,
     val lastSeenDate: String,
     val messages: List<ChatMessage>
 )
-
 @Serializable
 data class ChatMessage(
     val sender: String,

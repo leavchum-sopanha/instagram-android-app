@@ -23,9 +23,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
+import com.instagramapp.mvvm_module.ThemeViewModel
 
 @Composable
-fun SearchScreen(navController: NavHostController) {
+fun SearchScreen(navController: NavHostController, themeVM: ThemeViewModel) {
+    // Determine colors based on the theme
+    val backgroundColor = if (themeVM.dark.value) Color.Black else Color.White
+    val textColor = if (themeVM.dark.value) Color.White else Color.Black
+    val surfaceColor = if (themeVM.dark.value) Color.DarkGray else Color.LightGray
+    val iconColor = if (themeVM.dark.value) Color.White else Color.Black
+    val secondaryTextColor = if (themeVM.dark.value) Color.LightGray else Color.Gray
+
     var searchQuery by remember { mutableStateOf("") }
     val recentSearches = listOf(
         SearchUserProfile("njz_official", "NJZ", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg"),
@@ -36,18 +44,16 @@ fun SearchScreen(navController: NavHostController) {
         SearchUserProfile("yena.jigumina", "최예나", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg", "2.8M followers")
     )
 
-    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
         // Search Bar
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            SearchBar()
-//            Text(
-//                text = "Cancel",
-//                color = Color.Blue,
-//                modifier = Modifier.clickable { searchQuery = "" }.padding(8.dp)
-//            )
+            SearchBar(themeVM = themeVM) // Pass themeVM to SearchBar
         }
 
         Row(
@@ -55,57 +61,63 @@ fun SearchScreen(navController: NavHostController) {
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
-
         ) {
-            Text("Recent", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(
+                text = "Recent",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = textColor // Use theme-aware text color
+            )
             Spacer(modifier = Modifier.weight(1f))
-            Text("See all", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFF5661E0))
+            Text(
+                text = "See all",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF5661E0) // Keep this color consistent or make it theme-aware
+            )
         }
 
         // Recent Search List
         Column(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp)) {
-
             recentSearches.forEach { profile ->
                 Row(
-                    modifier = Modifier.fillMaxWidth().clickable { }
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { }
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-//                    Surface(
-//                        shape = CircleShape,
-//                        modifier = Modifier
-//                            .size(50.dp)
-//                            .border(2.dp, Color.Gray, CircleShape),
-//                        color = Color.LightGray
-//                    ) {
-//                        Image(
-//                            painter = rememberImagePainter(profile.avatarUrl),
-//                            contentDescription = profile.username,
-//                            modifier = Modifier.size(40.dp)
-//                                .background(Color.Gray, shape = CircleShape),
-//                            contentScale = ContentScale.Crop
-//                        )
-//                    }
-                        Image(
-                            painter = rememberImagePainter(profile.avatarUrl),
-                            contentDescription = "Profile",
-                            modifier = Modifier
-                                .size(50.dp)
-                                .clip(CircleShape)
-                                .background(Color.Gray),
-                            contentScale = ContentScale.Crop
-                        )
-
+                    Image(
+                        painter = rememberImagePainter(profile.avatarUrl),
+                        contentDescription = "Profile",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(CircleShape)
+                            .background(surfaceColor), // Use theme-aware surface color
+                        contentScale = ContentScale.Crop
+                    )
 
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
-                        Text(text = profile.username, style = MaterialTheme.typography.bodyMedium)
+                        Text(
+                            text = profile.username,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = textColor // Use theme-aware text color
+                        )
                         profile.extraInfo?.let {
-                            Text(text = it, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                            Text(
+                                text = it,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = secondaryTextColor // Use theme-aware secondary text color
+                            )
                         }
                     }
                     Spacer(modifier = Modifier.weight(1f))
-                    Text(text = "✖", modifier = Modifier.clickable { })
+                    Text(
+                        text = "✖",
+                        color = iconColor, // Use theme-aware icon color
+                        modifier = Modifier.clickable { }
+                    )
                 }
             }
         }

@@ -19,19 +19,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.androidapp_test.ui.theme.DarkBackground
+import com.example.androidapp_test.ui.theme.DarkSurface
+import com.example.androidapp_test.ui.theme.DarkText
+import com.instagramapp.mvvm_module.ThemeViewModel
 
 @Composable
-fun AboutScreen(navController: NavHostController) {
+fun AboutScreen(navController: NavHostController, themeVM: ThemeViewModel) {
+    val backgroundColor = if (themeVM.dark.value) DarkBackground else Color(0xFFF5F5F5)
+    val textColor = if (themeVM.dark.value) DarkText else Color.Black
+    val cardColor = if (themeVM.dark.value) DarkSurface else Color.White
+    val iconColor = if (themeVM.dark.value) Color.White else Color.Black
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F5F5))
+            .background(backgroundColor) // Use theme-aware background color
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(80.dp)
-                .background(Color(0xFFE91E63))
+                .background(Color(0xFFE91E63)) // Keep header color consistent
                 .padding(vertical = 3.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -41,7 +50,7 @@ fun AboutScreen(navController: NavHostController) {
                 Icon(
                     imageVector = Icons.Outlined.FavoriteBorder,
                     contentDescription = "Like",
-                    tint = Color.White,
+                    tint = Color.White, // Keep icon color consistent
                     modifier = Modifier
                         .size(28.dp)
                         .padding(end = 3.dp) // Spacing between icon and text
@@ -51,13 +60,13 @@ fun AboutScreen(navController: NavHostController) {
                     "Our Team Members",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = Color.White // Keep text color consistent
                 )
 
                 Icon(
                     imageVector = Icons.Outlined.FavoriteBorder,
                     contentDescription = "Like",
-                    tint = Color.White,
+                    tint = Color.White, // Keep icon color consistent
                     modifier = Modifier
                         .size(28.dp)
                         .padding(start = 3.dp) // Spacing between text and icon
@@ -73,7 +82,7 @@ fun AboutScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             profiles.forEach { profile ->
-                ProfileCard(profile)
+                ProfileCard(themeVM, profile, cardColor, textColor, iconColor) // Pass theme-aware colors
             }
         }
 
@@ -82,11 +91,11 @@ fun AboutScreen(navController: NavHostController) {
 }
 
 @Composable
-fun ProfileCard(profile: Profile) {
+fun ProfileCard(themeVM: ThemeViewModel, profile: Profile, cardColor: Color, textColor: Color, iconColor: Color) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
+            .background(cardColor, shape = RoundedCornerShape(8.dp)) // Use theme-aware card color
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -110,17 +119,17 @@ fun ProfileCard(profile: Profile) {
                 text = profile.name,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = textColor // Use theme-aware text color
             )
             Text(
                 text = "ID: ${profile.id}",
                 fontSize = 14.sp,
-                color = Color.Gray
+                color = if (themeVM.dark.value) Color.LightGray else Color.Gray // Use theme-aware text color
             )
             Text(
                 text = "Major: ${profile.major}",
                 fontSize = 14.sp,
-                color = Color.Gray
+                color = if (themeVM.dark.value) Color.LightGray else Color.Gray // Use theme-aware text color
             )
         }
 
@@ -130,7 +139,7 @@ fun ProfileCard(profile: Profile) {
         Icon(
             painter = painterResource(android.R.drawable.star_big_on), // Placeholder icon
             contentDescription = "Action Icon",
-            tint = Color(0xFFFFC107), // Yellow star color
+            tint = Color(0xFFFFC107), // Keep star color consistent
             modifier = Modifier.size(24.dp)
         )
     }

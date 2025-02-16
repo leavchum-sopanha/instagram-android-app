@@ -21,6 +21,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.example.androidapp_test.ui.theme.DarkBackground
+import com.example.androidapp_test.ui.theme.DarkSurface
+import com.example.androidapp_test.ui.theme.DarkText
+import com.example.androidapp_test.ui.theme.LightBackground
+import com.example.androidapp_test.ui.theme.LightSurface
+import com.example.androidapp_test.ui.theme.LightText
+import com.instagramapp.mvvm_module.ThemeViewModel
 
 data class UserProfile(
     val name: String,
@@ -29,15 +36,20 @@ data class UserProfile(
 )
 
 @Composable
-fun DiscoverPeopleSection() {
+fun DiscoverPeopleSection(themeVM: ThemeViewModel) {
     val users = listOf(
-        UserProfile("John Doe", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg", "Followed by heang_eries + 3..."),
-        UserProfile("Jane Smith", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg", "Followed by alex_92 + 2..."),
-        UserProfile("Mike Ross", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg", "Followed by sarah.k + 5..."),
-        UserProfile("Rachel Zane", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg", "Followed by tommy_c + 4..."),
-        UserProfile("Harvey Specter", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg", "Followed by donna.p + 3..."),
+        UserProfile("John Doe", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS88D2cTGWYgyj_LoqhAkDtzHw1Q28znf-7rg&s", "Followed by heang_eries + 3..."),
+        UserProfile("Jane Smith", "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "Followed by alex_92 + 2..."),
+        UserProfile("Mike Ross", "https://wallpapers.com/images/hd/cool-profile-picture-paper-bag-head-4co57dtwk64fb7lv.jpg", "Followed by sarah.k + 5..."),
+        UserProfile("Rachel Zane", "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D", "Followed by tommy_c + 4..."),
+        UserProfile("Harvey Specter", "https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg", "Followed by donna.p + 3..."),
         UserProfile("Louis Litt", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg", "Followed by harvey_s + 6...")
     )
+
+    val backgroundColor = if (themeVM.dark.value) DarkBackground else LightBackground
+    val textColor = if (themeVM.dark.value) DarkText else LightText
+    val cardColor = if (themeVM.dark.value) DarkSurface else LightSurface
+    val borderColor = if (themeVM.dark.value) Color.DarkGray else Color.LightGray
 
     Column {
         Row(
@@ -46,8 +58,17 @@ fun DiscoverPeopleSection() {
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Discover People", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-            Text(text = "See All", color = Color.Blue, fontSize = 14.sp)
+            Text(
+                text = "Discover People",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = textColor
+            )
+            Text(
+                text = "See All",
+                color = Color.Blue, // You can also make this theme-aware if needed
+                fontSize = 14.sp
+            )
         }
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -60,8 +81,8 @@ fun DiscoverPeopleSection() {
                 Box(modifier = Modifier.width(170.dp)) {
                     Card(
                         shape = RoundedCornerShape(12.dp),
-                        border = BorderStroke(1.dp, Color.LightGray), // Set border color to white
-                        colors = CardDefaults.cardColors(containerColor = Color.White),
+                        border = BorderStroke(1.dp, borderColor), // Use theme-aware border color
+                        colors = CardDefaults.cardColors(containerColor = cardColor), // Use theme-aware card color
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Column(
@@ -72,7 +93,7 @@ fun DiscoverPeopleSection() {
                                 shape = CircleShape,
                                 modifier = Modifier
                                     .size(120.dp)
-                                    .border(2.dp, Color.White, CircleShape), // Profile border white
+                                    .border(2.dp, borderColor, CircleShape), // Use theme-aware border color
                                 color = Color.LightGray
                             ) {
                                 Image(
@@ -82,20 +103,25 @@ fun DiscoverPeopleSection() {
                                 )
                             }
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(text = user.name, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                            Text(
+                                text = user.name,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = textColor // Use theme-aware text color
+                            )
                             Spacer(modifier = Modifier.height(2.dp))
                             Text(
                                 text = user.followersInfo,
                                 fontSize = 14.sp,
-                                color = Color.Gray,
-                                textAlign = TextAlign.Center // Corrected
+                                color = if (themeVM.dark.value) Color.LightGray else Color.Gray, // Use theme-aware text color
+                                textAlign = TextAlign.Center
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Button(
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(8.dp),
                                 onClick = { /* Follow User */ },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF5661E0))
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF5661E0)) // Keep button color consistent
                             ) {
                                 Text(text = "Follow", color = Color.White)
                             }
@@ -111,7 +137,7 @@ fun DiscoverPeopleSection() {
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Remove",
-                            tint = Color.Gray,
+                            tint = if (themeVM.dark.value) Color.LightGray else Color.Gray, // Use theme-aware icon color
                             modifier = Modifier.size(20.dp)
                         )
                     }
