@@ -38,12 +38,12 @@ fun SearchScreen(navController: NavHostController, themeVM: ThemeViewModel) {
 
     var searchQuery by remember { mutableStateOf("") }
     val recentSearches = listOf(
-        SearchUserProfile("njz_official", "NJZ", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg"),
+        SearchUserProfile("njz_official", "NJZ", "https://images.lifestyleasia.com/wp-content/uploads/sites/2/2023/03/07151004/press-release-photo-1-1-576x806-1.jpeg"),
         SearchUserProfile("newjeans.hanni", "NEWJEANS HANNI", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg"),
-        SearchUserProfile("newjeans_official", "NewJeans", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg", "12.6M followers"),
-        SearchUserProfile("0.hanni_", "조한영", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg"),
-        SearchUserProfile("flooraaa___", "Flora", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg"),
-        SearchUserProfile("yena.jigumina", "최예나", "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg", "2.8M followers")
+        SearchUserProfile("newjeans_official", "NewJeans", "https://www.coca-cola.com/content/dam/onexp/in/en/offerings/coke-studio/artists/NEW_JEANS_GROUP_01_WORKING_1-1.jpg", "12.6M followers"),
+        SearchUserProfile("0.hanni_", "조한영", "https://i.pinimg.com/736x/a5/f3/10/a5f310a0b4130de23139b0d1d19e410c.jpg"),
+        SearchUserProfile("flooraaa___", "Flora", "https://hips.hearstapps.com/hmg-prod/images/sacred-lotus-gettyimages-1143403162-646fa5a441f5d.jpg?crop=0.535xw:1.00xh;0.0519xw,0&resize=980:*"),
+        SearchUserProfile("yena.jigumina", "최예나", "https://i.pinimg.com/236x/14/7c/8f/147c8fec62a3589d8896b768ee5f4680.jpg", "2.8M followers")
     )
 
     Column(

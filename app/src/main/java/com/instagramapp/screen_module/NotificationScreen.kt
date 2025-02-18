@@ -48,7 +48,7 @@ fun NotificationScreen(navController: NavController, themeVM: ThemeViewModel) {
                 username = "phchorng and iam_unaaaa",
                 action = "shared notes",
                 time = "11h",
-                imageUrl = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+                imageUrl = "https://scontent.fpnh9-1.fna.fbcdn.net/v/t39.30808-6/464285754_1743384799730720_4287534339148776544_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEbQMtdsdO19Al06QWU2m5xbjcVGJzFSiBuNxUYnMVKIEQwzIdD-DyBJyK0kLaV64L5l1yaW9A8lWbRtDT9-b1Q&_nc_ohc=LO0bDTL-h2oQ7kNvgGOSNew&_nc_oc=Adj744oFKqfrTBZwxTNlwNW4O9831hHzKpo8NICVykFmT6Axk1FDLRRNROTeJ54fAA8&_nc_zt=23&_nc_ht=scontent.fpnh9-1.fna&_nc_gid=AcPGfyflm564fdcZyXtdNB5&oh=00_AYD5E5nq533JrJtrVWefCHSGHtscGndhXSgFBUeF8SfSwQ&oe=67B28444",
                 textColor = textColor,
                 isFollowButton = false,
                 buttonColor = buttonColor
@@ -67,7 +67,7 @@ fun NotificationScreen(navController: NavController, themeVM: ThemeViewModel) {
                 username = "rathapich_",
                 action = "posted a thread you might like:",
                 time = "2d",
-                imageUrl = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+                imageUrl = "https://scontent.fpnh9-1.fna.fbcdn.net/v/t39.30808-6/464285754_1743384799730720_4287534339148776544_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEbQMtdsdO19Al06QWU2m5xbjcVGJzFSiBuNxUYnMVKIEQwzIdD-DyBJyK0kLaV64L5l1yaW9A8lWbRtDT9-b1Q&_nc_ohc=LO0bDTL-h2oQ7kNvgGOSNew&_nc_oc=Adj744oFKqfrTBZwxTNlwNW4O9831hHzKpo8NICVykFmT6Axk1FDLRRNROTeJ54fAA8&_nc_zt=23&_nc_ht=scontent.fpnh9-1.fna&_nc_gid=AcPGfyflm564fdcZyXtdNB5&oh=00_AYD5E5nq533JrJtrVWefCHSGHtscGndhXSgFBUeF8SfSwQ&oe=67B28444",
                 textColor = textColor,
                 isFollowButton = false,
                 buttonColor = buttonColor
@@ -76,7 +76,7 @@ fun NotificationScreen(navController: NavController, themeVM: ThemeViewModel) {
                 username = "Li Sundika, Chan Veasna Neang",
                 action = "shared 14 photos.",
                 time = "4d",
-                imageUrl = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+                imageUrl = "https://i.pinimg.com/736x/d4/19/64/d41964a397666648b688d3c82640ee0a.jpg",
                 textColor = textColor,
                 isFollowButton = false,
                 buttonColor = buttonColor
@@ -85,7 +85,7 @@ fun NotificationScreen(navController: NavController, themeVM: ThemeViewModel) {
                 username = "li_sdika_",
                 action = "just shared a post.",
                 time = "4d",
-                imageUrl = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+                imageUrl = "https://i.pinimg.com/736x/a5/f3/10/a5f310a0b4130de23139b0d1d19e410c.jpg",
                 textColor = textColor,
                 isFollowButton = false,
                 buttonColor = buttonColor
@@ -94,7 +94,7 @@ fun NotificationScreen(navController: NavController, themeVM: ThemeViewModel) {
                 username = "pheach.phearom.1",
                 action = "who you might know, is on Instagram.",
                 time = "5d",
-                imageUrl = "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
+                imageUrl = "https://i.pinimg.com/736x/9b/8a/15/9b8a155076809a83617455e1b0dfc7a3.jpg",
                 textColor = textColor,
                 isFollowButton = true,
                 buttonColor = buttonColor

@@ -32,18 +32,18 @@ import com.instagramapp.R
 @Composable
 fun AddScreen() {
     val imageList = listOf(
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",
-        "https://i.pinimg.com/736x/94/38/c8/9438c8b78f397e2442ca0905110d8f0c.jpg",)
+        "https://images.unsplash.com/photo-1473172707857-f9e276582ab6?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGxvb2tpbmd8ZW58MHx8MHx8fDA%3D",
+        "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
+        "https://cdn.pixabay.com/photo/2014/05/02/12/47/night-335981_640.jpg",
+        "https://create.microsoft.com/_next/image?url=https%3A%2F%2Fcdn.create.microsoft.com%2Fimages%2Fimage-creator-T03_cat.webp&w=1920&q=90",
+        "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?cs=srgb&dl=pexels-souvenirpixels-414612.jpg&fm=jpg",
+        "https://t3.ftcdn.net/jpg/09/46/81/06/360_F_946810623_GQAbziz1yQTSzNskJwZhdkzCxY9OrcZn.jpg",
+        "https://freerangestock.com/sample/111717/person-sitting-on-hill-near-ocean.jpg",
+        "https://us.123rf.com/450wm/thevisualsyouneed/thevisualsyouneed1810/thevisualsyouneed181000427/109561289-silhouette-of-young-happy-and-attractive-african-american-runner-woman-exercising-in-running-fitness.jpg?ver=6",
+        "https://images.pexels.com/photos/29677897/pexels-photo-29677897/free-photo-of-stunning-beach-sunset-over-tranquil-sea.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://imagekit.io/blog/content/images/2019/12/image-optimization.jpg",
+        "https://static.mywebsites360.com/f6744469750742cba21abbfc64f2fdd0/i/c61ec43e3f1849ffa1860058701253fb/3/4SoifmQp45JMgBnHp7ed2/The%20Why%20and%20How%20of%20Image%20Optimization%20Thumb.jpg",
+        "https://www.vinaescuderos.com/wp-content/uploads/2022/06/pexels.png",)
 
     var selectedImage by remember { mutableStateOf(imageList.firstOrNull()) }
 
@@ -112,7 +112,6 @@ fun AddScreen() {
             modifier = Modifier.padding(start = 16.dp, top = 16.dp)
         )
 
-        // Image Grid
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             modifier = Modifier.padding(vertical = 16.dp)
@@ -120,6 +119,7 @@ fun AddScreen() {
             items(imageList) { imageUrl ->
                 Box(
                     modifier = Modifier
+                        .aspectRatio(1f)
                         .padding(1.dp)
                         .background(Color.DarkGray)
                         .clickable { selectedImage = imageUrl }
@@ -128,7 +128,7 @@ fun AddScreen() {
                         painter = rememberAsyncImagePainter(imageUrl),
                         contentDescription = "Recent Image",
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(100.dp)
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }
