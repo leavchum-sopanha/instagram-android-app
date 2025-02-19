@@ -37,7 +37,7 @@ fun ActionButtons(languageVM: LanguageViewModel, textColor: Color) {
             shape = RoundedCornerShape(8.dp)
         ) {
             Text(
-                text = stringResource(R.string.edit_profile, currentLanguage), // This will update automatically
+                text = stringResource(R.string.edit_profile, currentLanguage),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )

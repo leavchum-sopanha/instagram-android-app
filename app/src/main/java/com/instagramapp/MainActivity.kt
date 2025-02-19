@@ -32,7 +32,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            // Use the factories to create ViewModels
             val languageVM: LanguageViewModel = viewModel(
                 factory = LanguageViewModelFactory(this)
             )
@@ -73,9 +72,6 @@ fun StartingPoint(
     themeVM: ThemeViewModel
 ) {
     val nc = rememberNavController()
-//    val themeVM: ThemeViewModel = viewModel()
-//    val languageVM: LanguageViewModel = viewModel()
-
     val backgroundColor = if (themeVM.dark.value) DarkBackground else Color.White
     val duration = 400
 
@@ -166,18 +162,3 @@ fun StartingPoint(
         }
     }
 }
-
-//fun setAppLocale(context: Context, languageCode: String) {
-//    val locale = Locale(languageCode)
-//    Locale.setDefault(locale)
-//
-//    val config = Configuration()
-//    config.setLocale(locale)
-//
-//    context.resources.updateConfiguration(config, context.resources.displayMetrics)
-//
-//    // Restart the activity to apply the new locale
-//    val intent = Intent(context, MainActivity::class.java)
-//    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//    context.startActivity(intent)
-//}

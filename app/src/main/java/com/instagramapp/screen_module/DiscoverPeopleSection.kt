@@ -83,8 +83,8 @@ fun DiscoverPeopleSection(themeVM: ThemeViewModel) {
                 Box(modifier = Modifier.width(170.dp)) {
                     Card(
                         shape = RoundedCornerShape(12.dp),
-                        border = BorderStroke(1.dp, borderColor), // Use theme-aware border color
-                        colors = CardDefaults.cardColors(containerColor = cardColor), // Use theme-aware card color
+                        border = BorderStroke(1.dp, borderColor),
+                        colors = CardDefaults.cardColors(containerColor = cardColor),
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Column(
@@ -95,7 +95,7 @@ fun DiscoverPeopleSection(themeVM: ThemeViewModel) {
                                 shape = CircleShape,
                                 modifier = Modifier
                                     .size(120.dp)
-                                    .border(2.dp, borderColor, CircleShape), // Use theme-aware border color
+                                    .border(2.dp, borderColor, CircleShape),
                                 color = Color.LightGray
                             ) {
                                 Image(

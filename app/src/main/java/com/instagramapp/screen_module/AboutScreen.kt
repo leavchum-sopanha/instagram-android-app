@@ -52,26 +52,26 @@ fun AboutScreen(navController: NavHostController, themeVM: ThemeViewModel) {
                 Icon(
                     imageVector = Icons.Outlined.FavoriteBorder,
                     contentDescription = "Like",
-                    tint = Color.White, // Keep icon color consistent
+                    tint = Color.White,
                     modifier = Modifier
                         .size(28.dp)
-                        .padding(end = 3.dp) // Spacing between icon and text
+                        .padding(end = 3.dp)
                 )
 
                 Text(
                     stringResource(R.string.our_team_members),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White // Keep text color consistent
+                    color = Color.White
                 )
 
                 Icon(
                     imageVector = Icons.Outlined.FavoriteBorder,
                     contentDescription = "Like",
-                    tint = Color.White, // Keep icon color consistent
+                    tint = Color.White,
                     modifier = Modifier
                         .size(28.dp)
-                        .padding(start = 3.dp) // Spacing between text and icon
+                        .padding(start = 3.dp)
                 )
             }
         }
@@ -84,7 +84,7 @@ fun AboutScreen(navController: NavHostController, themeVM: ThemeViewModel) {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             profiles.forEach { profile ->
-                ProfileCard(themeVM, profile, cardColor, textColor, iconColor) // Pass theme-aware colors
+                ProfileCard(themeVM, profile, cardColor, textColor, iconColor)
             }
         }
 
@@ -97,13 +97,13 @@ fun ProfileCard(themeVM: ThemeViewModel, profile: Profile, cardColor: Color, tex
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(cardColor, shape = RoundedCornerShape(8.dp)) // Use theme-aware card color
+            .background(cardColor, shape = RoundedCornerShape(8.dp))
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Profile Icon
         Image(
-            painter = painterResource(id = profile.imageResId), // Use painterResource for profile image
+            painter = painterResource(id = profile.imageResId),
             contentDescription = "Profile Icon",
             modifier = Modifier
                 .size(50.dp)
@@ -121,17 +121,17 @@ fun ProfileCard(themeVM: ThemeViewModel, profile: Profile, cardColor: Color, tex
                 text = profile.name,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = textColor // Use theme-aware text color
+                color = textColor
             )
             Text(
                 text = "ID: ${profile.id}",
                 fontSize = 14.sp,
-                color = if (themeVM.dark.value) Color.LightGray else Color.Gray // Use theme-aware text color
+                color = if (themeVM.dark.value) Color.LightGray else Color.Gray
             )
             Text(
                 text = "Major: ${profile.major}",
                 fontSize = 14.sp,
-                color = if (themeVM.dark.value) Color.LightGray else Color.Gray // Use theme-aware text color
+                color = if (themeVM.dark.value) Color.LightGray else Color.Gray
             )
         }
 
@@ -141,7 +141,7 @@ fun ProfileCard(themeVM: ThemeViewModel, profile: Profile, cardColor: Color, tex
         Icon(
             painter = painterResource(android.R.drawable.star_big_on), // Placeholder icon
             contentDescription = "Action Icon",
-            tint = Color(0xFFFFC107), // Keep star color consistent
+            tint = Color(0xFFFFC107),
             modifier = Modifier.size(24.dp)
         )
     }

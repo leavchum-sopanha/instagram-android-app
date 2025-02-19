@@ -42,7 +42,7 @@ fun TopBar(navController: NavHostController, themeVM: ThemeViewModel) {
                 .height(50.dp)
         ) {
             Image(
-                painter = rememberAsyncImagePainter(logoUrl), // Use theme-aware logo URL
+                painter = rememberAsyncImagePainter(logoUrl),
                 contentDescription = "Instagram Logo",
                 modifier = Modifier.size(100.dp)
             )
@@ -58,7 +58,7 @@ fun TopBar(navController: NavHostController, themeVM: ThemeViewModel) {
                 Icon(
                     imageVector = Icons.Outlined.FavoriteBorder,
                     contentDescription = "Like",
-                    tint = iconColor, // Use theme-aware icon color
+                    tint = iconColor,
                     modifier = Modifier.size(28.dp)
                 )
             }
@@ -68,7 +68,7 @@ fun TopBar(navController: NavHostController, themeVM: ThemeViewModel) {
                 Icon(
                     imageVector = Icons.Outlined.MarkUnreadChatAlt,
                     contentDescription = "Message Icon",
-                    tint = iconColor // Use theme-aware icon color
+                    tint = iconColor
                 )
             }
             IconButton(onClick = {
@@ -77,7 +77,7 @@ fun TopBar(navController: NavHostController, themeVM: ThemeViewModel) {
                 Icon(
                     imageVector = Icons.Outlined.Info,
                     contentDescription = "About Icon",
-                    tint = iconColor // Use theme-aware icon color
+                    tint = iconColor
                 )
             }
         }

@@ -28,8 +28,8 @@ import com.instagramapp.mvvm_module.ThemeViewModel
 
 @Composable
 fun FooterSection(navController: NavHostController, themeVM: ThemeViewModel) {
-    val iconColor = if (themeVM.dark.value) Color.White else Color.Black // Use theme-aware icon color
-    val backgroundColor = if (themeVM.dark.value) DarkBackground else LightBackground // Use theme-aware background color
+    val iconColor = if (themeVM.dark.value) Color.White else Color.Black
+    val backgroundColor = if (themeVM.dark.value) DarkBackground else LightBackground
 
     Row(
         modifier = Modifier
@@ -44,7 +44,7 @@ fun FooterSection(navController: NavHostController, themeVM: ThemeViewModel) {
             Icon(
                 imageVector = Icons.Default.Home,
                 contentDescription = "Home",
-                tint = iconColor, // Use theme-aware icon color
+                tint = iconColor,
                 modifier = Modifier.size(30.dp)
             )
         }
@@ -53,7 +53,7 @@ fun FooterSection(navController: NavHostController, themeVM: ThemeViewModel) {
             Icon(
                 Icons.Default.Search,
                 contentDescription = "Search",
-                tint = iconColor, // Use theme-aware icon color
+                tint = iconColor,
                 modifier = Modifier.size(30.dp)
             )
         }
@@ -62,14 +62,14 @@ fun FooterSection(navController: NavHostController, themeVM: ThemeViewModel) {
             Icon(
                 imageVector = Icons.Outlined.AddBox,
                 contentDescription = "Add",
-                tint = iconColor, // Use theme-aware icon color
+                tint = iconColor,
                 modifier = Modifier.size(30.dp)
             )
         }
 
         IconButton(
             onClick = { navController.navigate(Screen.PROFILE) },
-            modifier = Modifier.size(30.dp) // Ensure consistency
+            modifier = Modifier.size(30.dp)
         ) {
             Image(
                 painter = rememberAsyncImagePainter("https://scontent.fpnh9-1.fna.fbcdn.net/v/t39.30808-6/464285754_1743384799730720_4287534339148776544_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEbQMtdsdO19Al06QWU2m5xbjcVGJzFSiBuNxUYnMVKIEQwzIdD-DyBJyK0kLaV64L5l1yaW9A8lWbRtDT9-b1Q&_nc_ohc=LO0bDTL-h2oQ7kNvgGOSNew&_nc_oc=Adj744oFKqfrTBZwxTNlwNW4O9831hHzKpo8NICVykFmT6Axk1FDLRRNROTeJ54fAA8&_nc_zt=23&_nc_ht=scontent.fpnh9-1.fna&_nc_gid=AcPGfyflm564fdcZyXtdNB5&oh=00_AYD5E5nq533JrJtrVWefCHSGHtscGndhXSgFBUeF8SfSwQ&oe=67B28444"),

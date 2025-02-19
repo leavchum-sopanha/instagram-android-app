@@ -46,12 +46,12 @@ fun InboxScreen(navController: NavHostController, themeVM: ThemeViewModel) {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        TopMenu(navController, iconColor, textColor) // Pass theme-aware colors
+        TopMenu(navController, iconColor, textColor)
         Box(modifier = Modifier.fillMaxWidth()) {
-            SearchBar(themeVM = themeVM) // Pass themeVM to SearchBar
+            SearchBar(themeVM = themeVM)
         }
-        StorySection(navController, themeVM = themeVM) // Pass themeVM to StorySection
-        MessagesSection(navController, textColor, secondaryTextColor, iconColor, surfaceColor) // Pass theme-aware colors
+        StorySection(navController, themeVM = themeVM)
+        MessagesSection(navController, textColor, secondaryTextColor, iconColor, surfaceColor)
     }
 }
 
@@ -69,14 +69,14 @@ fun TopMenu(navController: NavHostController, iconColor: Color, textColor: Color
                 Icon(
                     imageVector = Icons.Outlined.ArrowBackIos,
                     contentDescription = "Back",
-                    tint = iconColor // Use theme-aware icon color
+                    tint = iconColor
                 )
             }
             Text(
                 text = "sopanhahaha",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = textColor // Use theme-aware text color
+                color = textColor
             )
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -84,7 +84,7 @@ fun TopMenu(navController: NavHostController, iconColor: Color, textColor: Color
             Icon(
                 imageVector = Icons.Outlined.ModeEditOutline,
                 contentDescription = "Edit",
-                tint = iconColor // Use theme-aware icon color
+                tint = iconColor
             )
         }
     }
@@ -135,14 +135,14 @@ fun MessagesSection(
             text = stringResource(R.string.messages),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            color = textColor // Use theme-aware text color
+            color = textColor
         )
         Spacer(modifier = Modifier.weight(1f))
         Text(
             text = stringResource(R.string.requests),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF5661E0) // Keep this color consistent or make it theme-aware
+            color = Color(0xFF5661E0)
         )
     }
 
@@ -164,34 +164,34 @@ fun MessagesSection(
                     modifier = Modifier
                         .size(50.dp)
                         .clip(CircleShape)
-                        .background(surfaceColor) // Use theme-aware background color
-                        .border(1.dp, surfaceColor, CircleShape), // Use theme-aware border color
+                        .background(surfaceColor)
+                        .border(1.dp, surfaceColor, CircleShape),
                     contentScale = ContentScale.Crop
                 )
                 Column(modifier = Modifier.padding(start = 12.dp)) {
                     Text(
                         text = inbox.name,
                         fontSize = 16.sp,
-                        color = textColor // Use theme-aware text color
+                        color = textColor
                     )
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = inbox.messagePreview,
                             fontSize = 12.sp,
-                            color = secondaryTextColor // Use theme-aware secondary text color
+                            color = secondaryTextColor
                         )
                         Spacer(modifier = Modifier.width(3.dp))
                         Icon(
                             imageVector = Icons.Default.Circle,
                             contentDescription = "Time",
-                            tint = secondaryTextColor, // Use theme-aware icon color
+                            tint = secondaryTextColor,
                             modifier = Modifier.size(4.dp)
                         )
                         Spacer(modifier = Modifier.width(3.dp))
                         Text(
                             text = inbox.lastSeenDate,
                             fontSize = 12.sp,
-                            color = secondaryTextColor // Use theme-aware secondary text color
+                            color = secondaryTextColor
                         )
                     }
                 }
@@ -199,7 +199,7 @@ fun MessagesSection(
                 Icon(
                     imageVector = Icons.Outlined.CameraAlt,
                     contentDescription = "Camera",
-                    tint = iconColor, // Use theme-aware icon color
+                    tint = iconColor,
                     modifier = Modifier.size(25.dp)
                 )
             }

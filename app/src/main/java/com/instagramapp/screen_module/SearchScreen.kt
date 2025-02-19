@@ -55,7 +55,7 @@ fun SearchScreen(navController: NavHostController, themeVM: ThemeViewModel) {
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            SearchBar(themeVM = themeVM) // Pass themeVM to SearchBar
+            SearchBar(themeVM = themeVM)
         }
 
         Row(
@@ -68,14 +68,14 @@ fun SearchScreen(navController: NavHostController, themeVM: ThemeViewModel) {
                 text = stringResource(R.string.recent),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = textColor // Use theme-aware text color
+                color = textColor
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = stringResource(R.string.see_all),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF5661E0) // Keep this color consistent or make it theme-aware
+                color = Color(0xFF5661E0)
             )
         }
 
@@ -95,7 +95,7 @@ fun SearchScreen(navController: NavHostController, themeVM: ThemeViewModel) {
                         modifier = Modifier
                             .size(50.dp)
                             .clip(CircleShape)
-                            .background(surfaceColor), // Use theme-aware surface color
+                            .background(surfaceColor),
                         contentScale = ContentScale.Crop
                     )
 
@@ -104,20 +104,20 @@ fun SearchScreen(navController: NavHostController, themeVM: ThemeViewModel) {
                         Text(
                             text = profile.username,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = textColor // Use theme-aware text color
+                            color = textColor
                         )
                         profile.extraInfo?.let {
                             Text(
                                 text = it,
                                 style = MaterialTheme.typography.bodySmall,
-                                color = secondaryTextColor // Use theme-aware secondary text color
+                                color = secondaryTextColor
                             )
                         }
                     }
                     Spacer(modifier = Modifier.weight(1f))
                     Text(
                         text = "✖",
-                        color = iconColor, // Use theme-aware icon color
+                        color = iconColor,
                         modifier = Modifier.clickable { }
                     )
                 }

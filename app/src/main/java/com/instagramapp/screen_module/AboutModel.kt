@@ -3,7 +3,7 @@ package com.instagramapp.screen_module
 import com.instagramapp.R
 
 data class Profile(
-    val imageResId: Int, // Use Int for drawable resource ID
+    val imageResId: Int,
     val name: String,
     val id: String,
     val major: String
@@ -11,7 +11,7 @@ data class Profile(
 
 val profiles = listOf(
     Profile(
-        imageResId = R.drawable.sopanha, // Reference to drawable resource
+        imageResId = R.drawable.sopanha,
         name = "Leavchum Sopanha",
         id = "0003838",
         major = "Business IT"

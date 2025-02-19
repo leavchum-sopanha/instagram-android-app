@@ -57,7 +57,7 @@ fun PostSection(post: Post, themeVM: ThemeViewModel) {
                 text = post.userName,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = textColor // Use theme-aware text color
+                color = textColor
             )
         }
 

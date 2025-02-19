@@ -34,27 +34,27 @@ fun SearchBar(themeVM: ThemeViewModel) {
         placeholder = {
             Text(
                 text = "Search",
-                color = placeholderColor // Use theme-aware placeholder color
+                color = placeholderColor
             )
         },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Search Icon",
-                tint = iconColor // Use theme-aware icon color
+                tint = iconColor
             )
         },
         colors = TextFieldDefaults.colors(
-            focusedTextColor = textColor, // Use theme-aware text color
-            unfocusedTextColor = textColor, // Use theme-aware text color
-            focusedContainerColor = backgroundColor, // Use theme-aware background color
-            unfocusedContainerColor = backgroundColor, // Use theme-aware background color
-            focusedPlaceholderColor = placeholderColor, // Use theme-aware placeholder color
-            unfocusedPlaceholderColor = placeholderColor, // Use theme-aware placeholder color
-            focusedIndicatorColor = Color.Transparent, // Remove the focused underline
-            unfocusedIndicatorColor = Color.Transparent, // Remove the unfocused underline
-            cursorColor = textColor // Use theme-aware cursor color
+            focusedTextColor = textColor,
+            unfocusedTextColor = textColor,
+            focusedContainerColor = backgroundColor,
+            unfocusedContainerColor = backgroundColor,
+            focusedPlaceholderColor = placeholderColor,
+            unfocusedPlaceholderColor = placeholderColor,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            cursorColor = textColor
         ),
-        textStyle = LocalTextStyle.current.copy(color = textColor) // Explicitly set text color
+        textStyle = LocalTextStyle.current.copy(color = textColor)
     )
 }

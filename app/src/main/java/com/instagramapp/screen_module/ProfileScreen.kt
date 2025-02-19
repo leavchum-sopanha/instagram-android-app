@@ -2,18 +2,13 @@ package com.instagramapp.screen_module
 
 import android.content.Context
 import android.content.res.Configuration
-import android.provider.CalendarContract
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.GridOn
 import androidx.compose.material.icons.filled.Person
@@ -21,10 +16,8 @@ import androidx.compose.material.icons.filled.VideoLibrary
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.outlined.AddBox
-import androidx.compose.material.icons.outlined.ArrowBackIos
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.Menu
-import androidx.compose.material.icons.outlined.ModeEditOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,7 +47,6 @@ import com.example.androidapp_test.ui.theme.LightBackground
 import com.example.androidapp_test.ui.theme.LightSurface
 import com.example.androidapp_test.ui.theme.LightText
 import java.util.Locale
-import androidx.compose.runtime.collectAsState
 
 @Composable
 fun ProfileScreen(

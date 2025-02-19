@@ -29,7 +29,7 @@ fun NotificationScreen(navController: NavController, themeVM: ThemeViewModel) {
     val textColor = if (themeVM.dark.value) Color.White else Color.Black
     val surfaceColor = if (themeVM.dark.value) Color.DarkGray else Color.LightGray
     val iconColor = if (themeVM.dark.value) Color.White else Color.Black
-    val buttonColor = if (themeVM.dark.value) Color(0xFF5661E0) else Color(0xFF5661E0) // Keep button color consistent
+    val buttonColor = if (themeVM.dark.value) Color(0xFF5661E0) else Color(0xFF5661E0)
 
     Column(
         modifier = Modifier
@@ -39,7 +39,7 @@ fun NotificationScreen(navController: NavController, themeVM: ThemeViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            NotificationHeader(navController, iconColor, textColor) // Pass theme-aware colors
+            NotificationHeader(navController, iconColor, textColor)
         }
 
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -124,19 +124,19 @@ fun NotificationItem(
             Text(
                 text = "$username $action",
                 fontSize = 14.sp,
-                color = textColor // Use theme-aware text color
+                color = textColor
             )
             Text(
                 text = time,
                 fontSize = 12.sp,
-                color = MaterialTheme.colorScheme.onSurfaceVariant // Use theme-aware secondary text color
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
         if (isFollowButton) {
             Button(
                 shape = RoundedCornerShape(8.dp),
                 onClick = { /* Follow User */ },
-                colors = ButtonDefaults.buttonColors(containerColor = buttonColor) // Use theme-aware button color
+                colors = ButtonDefaults.buttonColors(containerColor = buttonColor)
             ) {
                 Text(text = stringResource(R.string.follow), color = Color.White)
             }
@@ -155,14 +155,14 @@ fun NotificationHeader(navController: NavController, iconColor: Color, textColor
             Icon(
                 imageVector = Icons.Outlined.KeyboardArrowLeft,
                 contentDescription = "Back",
-                tint = iconColor // Use theme-aware icon color
+                tint = iconColor
             )
         }
         Text(
             text = stringResource(R.string.notification),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = textColor // Use theme-aware text color
+            color = textColor
         )
     }
 }
@@ -173,6 +173,6 @@ fun SectionHeader(title: String, textColor: Color) {
         text = title,
         fontSize = 16.sp,
         modifier = Modifier.padding(vertical = 8.dp),
-        color = textColor // Use theme-aware text color
+        color = textColor
     )
 }

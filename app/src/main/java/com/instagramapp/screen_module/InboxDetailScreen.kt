@@ -167,7 +167,7 @@ fun InboxDetailScreen(navController: NavController, inboxJson: String, themeVM: 
                                 if (messageText.value.isEmpty()) {
                                     Text(
                                         text = "${stringResource(R.string.messages)}...",
-                                        color = textColor, // Use theme-aware placeholder color
+                                        color = textColor,
                                         fontSize = 16.sp
                                     )
                                 }
