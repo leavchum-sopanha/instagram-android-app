@@ -120,6 +120,8 @@ fun InboxDetailScreen(navController: NavController, inboxJson: String, themeVM: 
                     items(messages.size) { index ->
                         val chat = messages[index]
 
+                        Spacer(modifier = Modifier.height(20.dp))
+
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = if (chat.sender == "me") Arrangement.End else Arrangement.Start
