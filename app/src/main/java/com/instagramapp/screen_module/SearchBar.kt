@@ -13,7 +13,9 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.instagramapp.R
 import com.instagramapp.mvvm_module.ThemeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,7 +35,7 @@ fun SearchBar(themeVM: ThemeViewModel) {
             .padding(horizontal = 16.dp, vertical = 8.dp),
         placeholder = {
             Text(
-                text = "Search",
+                text = stringResource(R.string.search),
                 color = placeholderColor
             )
         },
